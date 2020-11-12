@@ -1,0 +1,30 @@
+table 1: course studentid grade   CSG
+// add date. What part should it be? Attribute or key?
+struct CSG {
+    char Course[5]; //conjugate key
+    int StudentId;  //conjugate key
+    char Grade[2];
+};
+table 2: StudentId Name Address Phone  SNAP
+struct SNAP {
+    int StudentId;  //k
+    char Name[5];
+    char Address[13];
+    char Phone[5];
+};
+// table 3:Course Prerequisite    CP
+struct CP {
+    char Course[5];             //conjugate key
+    char Prerequisite[5];       //conjugate key
+};
+table 4:Course Day Hour    CDH
+struct CDH {
+    char Course[5];         //conjugate key
+    char Day[5];            //conjugate key
+    char Hour[5];           //conjugate key
+};
+table 5:Course Room    CR
+struct CDH {
+    char Course[5];
+    char Room[5];
+};
