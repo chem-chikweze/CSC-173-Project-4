@@ -5,7 +5,7 @@
 #define courseSize 5
 #define gradeSize 2
 #define BASE (256)
-#define m (1008)
+#define SIZE (1008)
 
 typedef struct CSG *CSGLIST;
 struct CSG {
@@ -13,8 +13,9 @@ struct CSG {
     int StudentId;  //conjugate key
     char *Course;    // = (char*) malloc (courseSize * sizeof(char)); //conjugate key
     char *Grade;     //  = (char*) malloc (gradeSize * sizeof(char)); //conjugate key
+    CSGLIST next;
 };
-CSGLIST* HASHTABLE[1009];
+typedef CSGLIST* HASHTABLE;
 
 unsigned long hashCode (char *Course, int StudentId) {
     unsigned long hash;
@@ -25,10 +26,20 @@ unsigned long hashCode (char *Course, int StudentId) {
     // loops until the end of chars in Course
     while (*cs != '\0'){
         // multiplies current hash by BASE, adding current Course character and StudentId then mod m
-        hash = (hash * BASE + *cs + StudentId)% m;
+        hash = (hash * BASE + *cs + StudentId)% SIZE;
         cs++;
     }
     return hash;
+}
+
+HASHTABLE createHashtable() {
+    HASHTABLE hashtable = (HASHTABLE) malloc (sizeof(HASHTABLE) * SIZE);
+    for (int i = 0; i < SIZE; i++)
+    {
+        hashtable[i] = NULL;
+    }
+    
+    return hashtable;
 }
 
 CSGLIST createTuple(char* Course, char* Grade, int StudentId){
@@ -36,23 +47,38 @@ CSGLIST createTuple(char* Course, char* Grade, int StudentId){
     tuple->Course = (char *)malloc(sizeof(char)*courseSize);
     tuple->Grade = (char *)malloc(sizeof(char)*gradeSize);
     tuple->StudentId = StudentId;
+    tuple->next = NULL;
     strcpy(tuple->Course, Course);
     strcpy(tuple->Grade, Grade);
     return tuple;
 }
 
-void insert(char *Course, int StudentId, char *Grade){
+void insert(HASHTABLE table, char *Course, int StudentId, char *Grade){
     CSGLIST item = createTuple(Course, Grade, StudentId);
     int hashIndex = hashCode(Course, StudentId);
     // go to bucket,, walk through bucket for if it contains the struct or not.
-    while (HASHTABLE[hashIndex])
+    while (table[hashIndex])
     {
+        hashIndex += (hashIndex + 1) % SIZE;
+    }
+    table[hashIndex] = item;
+}
+
+void printTable(HASHTABLE t){
+    for (int i = 0; i < SIZE; i++)
+    {
+        if (t[i] )
+        {
+            printf("%s", t[i]->Course);
+        }
         
     }
     
 }
-
 int main() {
-    printf("Hello World");
+    // printf("Hello World");
+    HASHTABLE t = createHashtable();
+    insert(t, "CSC 173", 123, "A");
+    printTable(t);
     return 0;
 }
