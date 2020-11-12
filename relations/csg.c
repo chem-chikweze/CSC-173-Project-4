@@ -14,7 +14,7 @@ struct CSG {
     char *Course;    // = (char*) malloc (courseSize * sizeof(char)); //conjugate key
     char *Grade;     //  = (char*) malloc (gradeSize * sizeof(char)); //conjugate key
 };
-typedef CSGLIST HASHTABLE[1009];
+CSGLIST* HASHTABLE[1009];
 
 unsigned long hashCode (char *Course, int StudentId) {
     unsigned long hash;
@@ -44,11 +44,10 @@ CSGLIST createTuple(char* Course, char* Grade, int StudentId){
 void insert(char *Course, int StudentId, char *Grade){
     CSGLIST item = createTuple(Course, Grade, StudentId);
     int hashIndex = hashCode(Course, StudentId);
-
     // go to bucket,, walk through bucket for if it contains the struct or not.
     while (HASHTABLE[hashIndex])
     {
-        /* code */
+        
     }
     
 }
