@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdio.h>
 #include <stdlib.h>
+#define BASE (256)
+#define m (1008)
 
 // add date. What part should it be? Attribute or key?
 const int courseSize = 5;
@@ -16,15 +18,26 @@ struct CSG {
 };
 typedef CSGLIST HASHTABLE[1009];
 
-int hashCode (char *Course, int StudentId) {
-    // add Course and StudentID then mod 1009
-    int sum = 0;
-    for (int i = 0; i < courseSize; i++)
+unsigned long hashCode (char *Course, int StudentId) {
+    unsigned long hash;
+    unsigned const char *cs;
+    cs = (unsigned const char *) Course;
+    hash = 0;
+    while (*cs != '\0')
     {
-        sum += Course[i];
+        hash = (hash * BASE + *cs + StudentId)% m;
+        cs++;
     }
-    printf("%d", sum+StudentId);
-    return (StudentId + sum )% 1009;
+    return hash;
+    
+    // // add Course and StudentID then mod 1009
+    // int sum = 0;
+    // for (int i = 0; i < courseSize; i++)
+    // {
+    //     sum += Course[i];
+    // }
+    // printf("%d", sum+StudentId);
+    // return (StudentId + sum )% 1009;
 }
 
 void insert(char *Course, int StudentId, char *Grade){
