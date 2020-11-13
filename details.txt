@@ -28,3 +28,15 @@ struct CDH {
     char Course[5];
     char Room[5];
 };
+
+
+void insert(HASHTABLE table, char *Course, int StudentId, char *Grade){
+    CSGLIST item = createTuple(Course, Grade, StudentId);
+    int hashIndex = hashCode(Course, StudentId);
+    // go to bucket,, walk through bucket for if it contains the struct or not.
+    while (table[hashIndex])
+    {
+        hashIndex += (hashIndex + 1) % SIZE;
+    }
+    table[hashIndex] = item;
+}

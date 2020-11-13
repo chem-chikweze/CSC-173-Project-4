@@ -7,15 +7,15 @@
 #define BASE (256)
 #define SIZE (1008)
 
-typedef struct CSG *CSGLIST;
+typedef struct CSG *CSGTUPLE;
 struct CSG {
     // a type but with no associated storage
     int StudentId;  //conjugate key
     char *Course;    // = (char*) malloc (courseSize * sizeof(char)); //conjugate key
     char *Grade;     //  = (char*) malloc (gradeSize * sizeof(char)); //conjugate key
-    CSGLIST next;
+    CSGTUPLE next;
 };
-typedef CSGLIST* HASHTABLE;
+typedef CSGTUPLE* HASHTABLE;
 
 unsigned long hashCode (char *Course, int StudentId) {
     unsigned long hash;
@@ -34,16 +34,12 @@ unsigned long hashCode (char *Course, int StudentId) {
 
 HASHTABLE createHashtable() {
     HASHTABLE hashtable = (HASHTABLE) malloc (sizeof(HASHTABLE) * SIZE);
-    for (int i = 0; i < SIZE; i++)
-    {
-        hashtable[i] = NULL;
-    }
-    
+    for (int i = 0; i < SIZE; i++){ hashtable[i] = NULL;    }
     return hashtable;
 }
 
-CSGLIST createTuple(char* Course, char* Grade, int StudentId){
-    CSGLIST tuple = (CSGLIST)malloc(sizeof(CSGLIST));
+CSGTUPLE createTuple(char* Course, char* Grade, int StudentId){
+    CSGTUPLE tuple = (CSGTUPLE)malloc(sizeof(CSGTUPLE));
     tuple->Course = (char *)malloc(sizeof(char)*courseSize);
     tuple->Grade = (char *)malloc(sizeof(char)*gradeSize);
     tuple->StudentId = StudentId;
@@ -53,32 +49,91 @@ CSGLIST createTuple(char* Course, char* Grade, int StudentId){
     return tuple;
 }
 
-void insert(HASHTABLE table, char *Course, int StudentId, char *Grade){
-    CSGLIST item = createTuple(Course, Grade, StudentId);
-    int hashIndex = hashCode(Course, StudentId);
+void insert(CSGTUPLE tuple, HASHTABLE table){
+    int hashIndex = hashCode(tuple->Course, tuple->StudentId);
     // go to bucket,, walk through bucket for if it contains the struct or not.
-    while (table[hashIndex])
-    {
-        hashIndex += (hashIndex + 1) % SIZE;
-    }
-    table[hashIndex] = item;
+    while ( table[hashIndex]){   hashIndex = (hashIndex + 1) % SIZE;    }
+    table[hashIndex] = tuple;
+}
+
+void delete(CSGTUPLE tuple, HASHTABLE table){
+    // c and s are keys in CSG so if one is missing O(n) linear search through the whole list
+    // * S G
+    // if(tuple->Course == "*" && tuple->StudentId != '*'){
+    //     int count = 0;
+    //     while (count < SIZE){
+    //         if(table[count]->Grade == tuple->Grade && table[count]->StudentId == tuple->StudentId){
+    //             table[count] = NULL;
+    //         }
+    //     }
+    // }
+
+    // C * G
+    // if(tuple->Course != "*" && tuple->StudentId == '*'){
+    //     int count = 0;
+    //     while (count < SIZE){
+    //         if(table[count]->Course == tuple->Course && table[count]->Grade == tuple->Grade){
+    //             table[count] = NULL;
+    //         }
+    //     }
+    // }
+
+    // * * G;
+    // if(tuple->Course == "*" && tuple->StudentId == '*' && tuple->Grade != '*'){
+    //     int count = 0;
+    //     while (count < SIZE){
+    //         if(table[count]->Grade == tuple->Grade){
+    //             table[count] = NULL;
+    //         }
+    //     }
+    // }
+
+    // C S *
+    // if(tuple->Course != "*" && tuple->StudentId != '*' && tuple->Grade == '*'){
+    //     int hash = hashCode(tuple->Course, tuple->StudentId);
+    //     while (table[hash]){
+    //     if(table[hash]->Course == tuple->Course && table[hash]->StudentId == tuple->StudentId){
+    //         table[hash] = NULL;
+    //         return NULL;
+    //     } hash = (hash + 1) % SIZE;
+    //     }
+    // }
+
+    // C S G
+    // if(tuple->Course != "*" && tuple->StudentId != '*' && tuple->Grade != "*"){
+    //     int hash = hashCode(tuple->Course, tuple->StudentId);
+    //     while (table[hash]){
+    //     if(table[hash]->Course == tuple->Course && table[hash]->StudentId == tuple->StudentId && table[hash]->Grade == tuple->Grade){
+    //         table[hash] = NULL;
+    //         return NULL;
+    //     } hash = (hash + 1) % SIZE;
+    //     }
+    // }
+
+    int hash = hashCode(tuple->Course, tuple->StudentId);
+    while (table[hash]){
+        if(table[hash]->Course == tuple->Course && table[hash]->StudentId == tuple->StudentId && table[hash]->Grade == tuple->Grade){
+            table[hash] = NULL;
+            return NULL;
+        } hash = (hash + 1) % SIZE;
+    }    
 }
 
 void printTable(HASHTABLE t){
     for (int i = 0; i < SIZE; i++)
-    {
-        if (t[i] )
-        {
-            printf("%s", t[i]->Course);
-        }
-        
+    {   
+        if (t[i] ){     printf("%s", t[i]->Course);     } 
     }
-    
 }
+
 int main() {
-    // printf("Hello World");
-    HASHTABLE t = createHashtable();
-    insert(t, "CSC 173", 123, "A");
-    printTable(t);
+    HASHTABLE r = createHashtable();
+    CSGTUPLE t = createTuple("CSC 173", "A", 123);
+    insert(t, r);
+    printTable(r);
+    printf("\n");
+    CSGTUPLE t1 = createTuple("CSC 173", "A", 123);
+    delete(t1, r);
+    printTable(r);
     return 0;
 }
