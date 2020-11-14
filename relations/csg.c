@@ -15,7 +15,7 @@ struct CSG {
     char *Grade;     //  = (char*) malloc (gradeSize * sizeof(char)); //conjugate key
     CSGTUPLE next;
 };
-typedef CSGTUPLE* HASHTABLE;
+typedef CSGTUPLE* CSGTABLE;
 
 unsigned long hashCode (char *Course, int StudentId) {
     unsigned long hash;
@@ -32,10 +32,10 @@ unsigned long hashCode (char *Course, int StudentId) {
     return hash;
 }
 
-HASHTABLE createHashtable() {
-    HASHTABLE hashtable = (HASHTABLE) malloc (sizeof(HASHTABLE) * SIZE);
-    for (int i = 0; i < SIZE; i++){ hashtable[i] = NULL;    }
-    return hashtable;
+CSGTABLE createCSGTABLE() {
+    CSGTABLE CSGTABLE = (CSGTABLE) malloc (sizeof(CSGTABLE) * SIZE);
+    for (int i = 0; i < SIZE; i++){ CSGTABLE[i] = NULL;    }
+    return CSGTABLE;
 }
 
 CSGTUPLE createTuple(char* Course, char* Grade, int StudentId){
@@ -49,14 +49,14 @@ CSGTUPLE createTuple(char* Course, char* Grade, int StudentId){
     return tuple;
 }
 
-void insert(CSGTUPLE tuple, HASHTABLE table){
+void insert(CSGTUPLE tuple, CSGTABLE table){
     int hashIndex = hashCode(tuple->Course, tuple->StudentId);
     // go to bucket,, walk through bucket for if it contains the struct or not.
     while ( table[hashIndex]){   hashIndex = (hashIndex + 1) % SIZE;    }
     table[hashIndex] = tuple;
 }
 
-void delete(CSGTUPLE tuple, HASHTABLE table){
+void delete(CSGTUPLE tuple, CSGTABLE table){
     // c and s are keys in CSG so if one is missing O(n) linear search through the whole list
     // * S G
     // if(tuple->Course == "*" && tuple->StudentId != '*'){
@@ -119,7 +119,7 @@ void delete(CSGTUPLE tuple, HASHTABLE table){
     }    
 }
 
-void printTable(HASHTABLE t){
+void printTable(CSGTABLE t){
     for (int i = 0; i < SIZE; i++)
     {   
         if (t[i] ){     printf("%s", t[i]->Course);     } 
@@ -127,7 +127,7 @@ void printTable(HASHTABLE t){
 }
 
 int main() {
-    HASHTABLE r = createHashtable();
+    CSGTABLE r = createCSGTABLE();
     CSGTUPLE t = createTuple("CSC 173", "A", 123);
     insert(t, r);
     printTable(r);
