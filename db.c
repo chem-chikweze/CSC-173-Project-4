@@ -35,3 +35,30 @@ db createDB(){
     return dbase;
 }
 
+void fromFIle(db r, char *f){
+    FILE *fp;
+    char line[100];
+
+    if((fp = fopen(f, "r")) == NULL){
+        printf("Error! opening file");
+        exit(1);
+    }
+    while (fgets(line, 100, fp) != NULL)
+    {
+        sscanf(line, f, "%s");
+        printf("%s\n", line);
+    }
+    //  while (!feof(fp))
+    // {
+    //     sscanf(line, f, "%s");
+    //     printf("%s\n", line);
+        
+    // }
+    
+    
+    // if(strcmp())
+    
+    
+
+    fclose(fp);
+}

@@ -13,7 +13,6 @@
 #define prereqSize 8
 #define roomSize 8
 #define BASE (256)
-#define SIZE (1008)
 
 
 //table 1: course studentid grade   CSG

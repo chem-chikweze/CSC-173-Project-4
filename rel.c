@@ -228,13 +228,12 @@ void printCSG(CSGTABLE t){
 }
 
 void printSNAP(SNAPTABLE t){
-    printf("%d", 45);
-    // for (int i = 0; i < CSGSIZE; i++)
-    // {   printf("%s", "hen");
-    //     if (t[i] ){     
-    //         printf("\n%s\t%d\t%d\t%s", t[i]->Name, t[i]->StudentId, t[i]->Phone, t[i]->Address);     
-    //     } 
-    // }
+    for (int i = 0; i < CSGSIZE; i++)
+    {   printf("%s", "hen");
+        if (t[i] ){     
+            printf("\n%s\t%d\t%d\t%s", t[i]->Name, t[i]->StudentId, t[i]->Phone, t[i]->Address);     
+        } 
+    }
 }
 void printCP(CPTABLE t){
     for (int i = 0; i < CSGSIZE; i++)

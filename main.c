@@ -22,6 +22,7 @@
 
 int main() {
     db r = createDB();
+    fromFIle(r, "input.txt");
     CSGTUPLE t = createCSG("CSC 173", "A", 123);
     SNAPTUPLE s = createSNAP(345, "Adamma Chidi", "Onitsha", 585123123);
     CPTUPLE p = createCP("CSC 173", "CSC 172");
@@ -41,11 +42,11 @@ int main() {
     // printf("\nYup %s", rt->Room);
     // printf("\n");
 
-    // printCSG(r->csg);
+    printCSG(r->csg);
     printSNAP(r->snap);
-    // printCP(r->cp);
-    // printCDH(r->cdh);
-    // printCR(r->cr);
+    printCP(r->cp);
+    printCDH(r->cdh);
+    printCR(r->cr);
 
 
     // printf("\n");
