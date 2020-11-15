@@ -24,7 +24,7 @@ struct CDH {
     char Hour[5];           //conjugate key
 };
 table 5:Course Room    CR
-struct CDH {
+struct CR {
     char Course[5];
     char Room[5];
 };
@@ -40,3 +40,23 @@ void insert(HASHTABLE table, char *Course, int StudentId, char *Grade){
     }
     table[hashIndex] = item;
 }
+
+
+// typedef struct CSG *CSGTUPLE;   // Struct defined type for an instance of a CSG tuple
+// struct CSG {
+//     // a type but with no associated storage
+//     int StudentId;  //conjugate key
+//     char *Course;    // = (char*) malloc (courseSize * sizeof(char)); //conjugate key
+//     char *Grade;     //  = (char*) malloc (gradeSize * sizeof(char)); //conjugate key
+//     CSGTUPLE next;
+// };
+// typedef CSGTUPLE **CSGTABLE;    // hashtable for table CSG
+
+ HASHTABLE r = createHashtable();
+    CSGTUPLE t = createCSGTuple("CSC 173", "A", 123);
+    insert(t, r);
+    printTable(r);
+    printf("\n");
+    CSGTUPLE t1 = createCSGTuple("CSC 173", "A", 123);
+    delete(t1, r);
+    printTable(r);
