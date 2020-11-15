@@ -1,9 +1,6 @@
-#include <stdio.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "db.h"
 #include "rel.h"
+#include "db.h"
+
 
 db createDB(){
     db dbase = (db) malloc (sizeof(db));
@@ -43,22 +40,64 @@ void fromFIle(db r, char *f){
         printf("Error! opening file");
         exit(1);
     }
-    while (fgets(line, 100, fp) != NULL)
-    {
-        sscanf(line, f, "%s");
-        printf("%s\n", line);
-    }
-    //  while (!feof(fp))
-    // {
-    //     sscanf(line, f, "%s");
-    //     printf("%s\n", line);
+    
+    while(fgets(line, 100, fp)){
+        const char delim[2] = "\t";
+        char *token;
+        int i=0, j;
+
+        char *words[20];
+        token = strtok(line, delim);
+        while(token){
+            words[i] = token;
+            token = strtok(NULL, qq);
+            i++;
+        }
         
-    // }
-    
-    
-    // if(strcmp())
+        // if(strcmp(words[0], "CSG")==0){
+        //     int studentid;
+        //     sscanf(words[3], "%d", studentid);
+        //     CSGTUPLE t = createCSG(words[1], words[2], studentid);
+        //     insertCSG(t, r->csg);
+           
+        // }
+        if(strcmp(words[0], "SNAP")==0){
+            int phone;
+            sscanf(words[4], "%d", phone);
+            int studentid;
+            sscanf(words[1], "%d", studentid);
+            SNAPTUPLE t = createSNAP(studentid, words[2], words[3], phone);
+            insertSNAP(t, r->snap);
+            //  for(int j = 0; j< i; j++){
+            //     printf("%s\t", words[j]);
+            // }
+            printf("%s\t", words[j]);
+            printf("%s\t", words[j]);
+            printf("%s\t", words[j]);
+        }
+        // if(strcmp(words[0], "CP")==0){
+        //     CPTUPLE t = createCP(words[1], words[2]);
+        //     insertCP(t, r->cp);
+        // }
+        // if(strcmp(words[0], "CDH")==0){
+        //     CDHTUPLE t = createCDH(words[1], words[2], words[3]);
+        //     insertCDH(t, r->cdh);
+        // }
+        // if(strcmp(words[0], "CR")==0){
+        //     CRTUPLE t = createCR(words[1], words[2]);
+        //     insertCR(t, r->cr);
+        // }
+        
+        
+        // // token = strtok(line, s);
+        // printf("%s", words[1]);
+       
     
     
 
+    }
     fclose(fp);
+
 }
+
+

@@ -1,5 +1,6 @@
 #ifndef REL_H
 #define REL_H
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdio.h>
 #include <stdlib.h>
