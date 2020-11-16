@@ -74,7 +74,7 @@ unsigned long hashCDH (char* Course, char* Day, char* Hour);
 unsigned long hashCR (char* Course, char* Room);
 
 // create
-CSGTUPLE createCSG(char* Course, char* Grade, int StudentId);
+CSGTUPLE createCSG(char* Course, int StudentId, char* Grade);
 SNAPTUPLE createSNAP(int StudentId, char* Name, char* Address, int Phone);
 CPTUPLE createCP(char* Course, char* Prerequisite);
 CDHTUPLE createCDH(char* Course, char* Day, char* Hour);

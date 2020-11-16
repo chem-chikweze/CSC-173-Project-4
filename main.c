@@ -17,22 +17,20 @@
 9.  insert
 10. projection    printf("1");
 
-11. join
+11. joinn
 
 **/
 int main() {
     db r = createDB();
-    // fromFIle(r, "input.txt");
-    CRTUPLE rt = createCR("MTHs 173", "Room 2");
-    insertCR(rt, r->cr);
+    fromFIle(r, "input.txt");
+    // CRTUPLE rt = createCR("MTHs 173", "Room 2");
+    // insertCR(rt, r->cr);
   
-
-    // printCSG(r->csg);
-    // printSNAP(r->snap);
+    printCSG(r->csg);
+    printSNAP(r->snap);
     // printCP(r->cp);
-    // printCDH(r->cdh);    printf("1");
-
-    // printCR(r->cr);
+    // printCDH(r->cdh);    
+    // printCR(r->cr);        
 
     // printf("\n%s\n", "print");
     // printf("\n");
@@ -42,3 +40,13 @@ int main() {
     return 0;
 }
 
+// void insert(HASHTABLE table, char *Course, int StudentId, char *Grade){
+//     CSGLIST item = createTuple(Course, Grade, StudentId);
+//     int hashIndex = hashCode(Course, StudentId);
+//     // go to bucket,, walk through bucket for if it contains the struct or not.
+//     while (table[hashIndex])
+//     {
+//         hashIndex += (hashIndex + 1) % SIZE;
+//     }
+//     table[hashIndex] = item;
+// }
