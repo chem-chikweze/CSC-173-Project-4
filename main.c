@@ -26,10 +26,10 @@ int main() {
     // CRTUPLE rt = createCR("MTHs 173", "Room 2");
     // insertCR(rt, r->cr);
   
-    // printCSG(r->csg);
-    // printSNAP(r->snap);
-    // printCP(r->cp);
-    // printCDH(r->cdh);    
+    printCSG(r->csg);
+    printSNAP(r->snap);
+    printCP(r->cp);
+    printCDH(r->cdh);    
     printCR(r->cr);        
 
     // printf("\n%s\n", "print");

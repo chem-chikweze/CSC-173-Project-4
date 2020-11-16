@@ -44,7 +44,6 @@ unsigned long hashCDH (char* Course, char* Day, char* Hour){
     val3 = atoi(str);
     val4 = val1*val2*val3;
     hash = (val4 * BASE)% SIZE;  
-    printf("CDH Hash: %d", hash) ;
     return hash;
 }
 
@@ -117,8 +116,6 @@ CRTUPLE createCR(char* Course, char* Room){
     tuple->next = NULL;
     strcpy(tuple->Course, Course);
     strcpy(tuple->Room, Room);
-   
-    printf("%s\t%s", tuple->Course, tuple->Room);
     return tuple;
 }
 
@@ -177,8 +174,6 @@ void insertCR(CRTUPLE tuple, CRTABLE table){
         hashIndex = (hashIndex + 1) % SIZE;
     }
     table[hashIndex] = tuple;
-        printf("\n%d\n", hashIndex);
-
 }
 
 void printCSG(CSGTABLE t){

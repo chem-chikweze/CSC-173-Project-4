@@ -80,32 +80,32 @@ void fromFIle(db r, char *f){
 
         for(int j = 0; j< i; j++){
             
-            // if(strcmp(words[j], "CSG") == 0){
-            //     int studentid;
-            //     sscanf(words[2], "%d", &studentid);
-            //     CSGTUPLE t = createCSG(words[1], studentid, words[3]);
-            //     insertCSG(t, r->csg);
-            //     // printf("%s%s%d\n",t->Course, t->Grade, studentid);
-            // }
-            // else if(strcmp(words[j], "SNAP") == 0){
-            //     int phone;
-            //     sscanf(words[4], "%d", &phone);
-            //     int studentid;
-            //     sscanf(words[1], "%d", &studentid);
-            //     SNAPTUPLE t = createSNAP(studentid, words[2], words[3], phone);
-            //     insertSNAP(t, r->snap);
-            //     // printf("%s\t%d\t%d\t%s\n",t->Address, phone, t->Name, studentid);
-            // }
-            //  if(strcmp(words[j], "CP") == 0){
-            //     CPTUPLE t = createCP(words[1], words[2]);
-            //     insertCP(t, r->cp);
-            //     // printf("2");
-            //     // printf("%s\t%s",t->Course, t->Prerequisite);
-            // }
-            // if(strcmp(words[j], "CDH") == 0){
-            //     CDHTUPLE t = createCDH(words[1], words[2], words[3]);
-            //     insertCDH(t, r->cdh);
-            // }
+            if(strcmp(words[j], "CSG") == 0){
+                int studentid;
+                sscanf(words[2], "%d", &studentid);
+                CSGTUPLE t = createCSG(words[1], studentid, words[3]);
+                insertCSG(t, r->csg);
+                // printf("%s%s%d\n",t->Course, t->Grade, studentid);
+            }
+            else if(strcmp(words[j], "SNAP") == 0){
+                int phone;
+                sscanf(words[4], "%d", &phone);
+                int studentid;
+                sscanf(words[1], "%d", &studentid);
+                SNAPTUPLE t = createSNAP(studentid, words[2], words[3], phone);
+                insertSNAP(t, r->snap);
+                // printf("%s\t%d\t%d\t%s\n",t->Address, phone, t->Name, studentid);
+            }
+             if(strcmp(words[j], "CP") == 0){
+                CPTUPLE t = createCP(words[1], words[2]);
+                insertCP(t, r->cp);
+                // printf("2");
+                // printf("%s\t%s",t->Course, t->Prerequisite);
+            }
+            if(strcmp(words[j], "CDH") == 0){
+                CDHTUPLE t = createCDH(words[1], words[2], words[3]);
+                insertCDH(t, r->cdh);
+            }
             if(strcmp(words[j], "CR") == 0){
                 CRTUPLE t = createCR(words[1], words[2]);
                 insertCR(t, r->cr);
