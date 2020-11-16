@@ -130,6 +130,7 @@ CRTUPLE createCR(char* Course, char* Room){
 void insertCSG(CSGTUPLE tuple, CSGTABLE table){
     unsigned long hashIndex = hashCSG(tuple->Course, tuple->StudentId);
     // go to bucket,, walk through bucket for if it contains the struct or not.
+    tuple->next = table[hashIndex]
     while ( table[hashIndex]){   hashIndex = (hashIndex + 1) % SIZE;    }
     table[hashIndex] = tuple;
 }
@@ -235,7 +236,20 @@ void printCR(CRTABLE t){
 CSGTUPLE lookupCSG(CSGTUPLE tuple, CSGTABLE table){
     if(tuple->Course != "*" && tuple->StudentId != "*"){
         printf("f");
-        return NULL;
+        int index = hashCSG(tuple->Course, tuple->StudentId);
+        // while (table[index]->Course != tuple->Course && table[index]->StudentId != tuple->StudentId)
+        // {
+        //     index = (index + 1) % SIZE;
+        // }
+        for(CSGTUPLE e = table[hhashCSG(tuple->Course, tuple->StudentId) % SIZE]; e != NULL; e = e->next){
+            if(!strcmp(e->Course, tuple->Course) && !strcmp(e->StudentId, tuple->StudentId)){
+                return e;
+            }
+        }
+        return 0;
+    }else{
+        printf("yup");
+        return 0;
     }
     return NULL;
 }

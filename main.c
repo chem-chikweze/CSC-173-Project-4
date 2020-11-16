@@ -32,7 +32,7 @@ int main() {
     printCR(r->cr);        
 
     // LOOKUP
-    CSGTUPLE rt = createCSG("MTHs 173", "*", "Room 2");
+    CSGTUPLE rt = createCSG("*", "*", "Room 2");
     CSGTUPLE t = lookupCSG(rt, r->csg);
     // insertCR(rt, r->cr);
     // printf("\n%s\n", "print");
