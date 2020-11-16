@@ -13,6 +13,8 @@
 #define gradeSize 2
 #define prereqSize 8
 #define roomSize 8
+#define studentSize 100
+#define phoneSize 12
 #define BASE (256)
 
 
@@ -21,7 +23,7 @@
 typedef struct CSG *CSGTUPLE;
 struct CSG {
     char *Course; //conjugate key
-    int StudentId;  //conjugate key
+    char *StudentId;  //conjugate key
     char *Grade;
     CSGTUPLE next;
 };
@@ -30,10 +32,10 @@ typedef CSGTUPLE* CSGTABLE;
 //table 2: StudentId Name Address Phone  SNAP
 typedef struct SNAP *SNAPTUPLE;
 struct SNAP {
-    int StudentId;  //k
+    char *StudentId;  //k
     char *Name;
     char *Address;
-    int Phone;
+    char *Phone;
     SNAPTUPLE next;
 };
 typedef SNAPTUPLE* SNAPTABLE;
@@ -67,15 +69,15 @@ struct CR {
 typedef CRTUPLE* CRTABLE;
 
 // hash
-unsigned long hashCSG (char *Course, int StudentId);
-unsigned long hashSNAP (int StudentId);
+unsigned long hashCSG (char *Course, char *StudentId);
+unsigned long hashSNAP (char *StudentId);
 unsigned long hashCP (char *Course, char* Prerequisite);
 unsigned long hashCDH (char* Course, char* Day, char* Hour);
 unsigned long hashCR (char* Course, char* Room);
 
 // create
-CSGTUPLE createCSG(char* Course, int StudentId, char* Grade);
-SNAPTUPLE createSNAP(int StudentId, char* Name, char* Address, int Phone);
+CSGTUPLE createCSG(char* Course, char *StudentId, char* Grade);
+SNAPTUPLE createSNAP(char *StudentId, char* Name, char* Address, char *Phone);
 CPTUPLE createCP(char* Course, char* Prerequisite);
 CDHTUPLE createCDH(char* Course, char* Day, char* Hour);
 CRTUPLE createCR(char* Course, char* Room);
@@ -107,11 +109,12 @@ void printCP(CPTABLE t);
 void printCDH(CDHTABLE t);
 void printCR(CRTABLE t);
 
-CSGTABLE createCSGTABLE();
-CSGTUPLE createTuple(char* Course, char* Grade, int StudentId);
-void insert(CSGTUPLE tuple, CSGTABLE table);
-int delete(CSGTUPLE tuple, CSGTABLE table);
-void printCSG(CSGTABLE t);
+// commented thest out. Hope they did not play a part in the h file.
+// CSGTABLE createCSGTABLE();
+// CSGTUPLE createTuple(char* Course, char* Grade, int StudentId);
+// void insert(CSGTUPLE tuple, CSGTABLE table);
+// int delete(CSGTUPLE tuple, CSGTABLE table);
+// void printCSG(CSGTABLE t);
 
 #endif
 

@@ -1,21 +1,26 @@
 #include "rel.h"
 #include "db.h"
 
-unsigned long hashCSG (char *Course, int StudentId) {
+unsigned long hashCSG (char *Course, char *StudentId) {
     unsigned long hash;
     int val1,val2, val3;
     char str[100];
     strcpy(str, Course);
     val1 =  atoi(str);
-    val2 = StudentId;
+    strcpy(str, StudentId);
+    val2 = atoi(str);
     val3 = val1*val2;
     hash = (val3 * BASE)% SIZE;
     return hash;
 }
 
-unsigned long hashSNAP (int StudentId){
+unsigned long hashSNAP (char *StudentId){
     unsigned long hash = 0;
-    hash = StudentId % SIZE;
+    int val1;
+    char str[100];
+    strcpy(str, StudentId);
+    val1 =  atoi(str);
+    hash = val1 % SIZE;
     return hash;
 }
 
@@ -64,26 +69,29 @@ unsigned long hashCR (char* Course, char* Room){
 
 
 
-CSGTUPLE createCSG(char* Course, int StudentId, char* Grade){
+CSGTUPLE createCSG(char* Course, char *StudentId, char* Grade){
     CSGTUPLE tuple = (CSGTUPLE)malloc(sizeof(CSGTUPLE));
     tuple->Course = (char *)malloc(sizeof(char)*courseSize);
     tuple->Grade = (char *)malloc(sizeof(char)*gradeSize);
-    tuple->StudentId = StudentId;
+    tuple->StudentId = (char *)malloc(sizeof(char)*studentSize);
     tuple->next = NULL;
+    strcpy(tuple->StudentId, StudentId);
     strcpy(tuple->Course, Course);
     strcpy(tuple->Grade, Grade);
     return tuple;
 }
 
-SNAPTUPLE createSNAP(int StudentId, char *Name, char* Address, int Phone){
+SNAPTUPLE createSNAP(char *StudentId, char *Name, char* Address, char *Phone){
     SNAPTUPLE tuple = (SNAPTUPLE)malloc(sizeof(SNAPTUPLE));
-    tuple->StudentId = StudentId;
+    tuple->StudentId = (char *)malloc(sizeof(char)*studentSize);
     tuple->Name = (char *)malloc(sizeof(char)*NameSize);
     tuple->Address = (char *)malloc(sizeof(char)*AddressSize);
-    tuple->Phone = Phone;
+    tuple->Phone = (char *)malloc(sizeof(char)*gradeSize);
     tuple->next = NULL;
     strcpy(tuple->Name, Name);
     strcpy(tuple->Address, Address);
+    strcpy(tuple->StudentId, StudentId);
+    strcpy(tuple->Phone, Phone);
     return tuple;
 }
 

@@ -25,11 +25,11 @@ int main() {
     fromFIle(r, "input.txt");
 
     //PRINT
-    // printCSG(r->csg);
-    // printSNAP(r->snap);
-    // printCP(r->cp);
-    // printCDH(r->cdh);    
-    // printCR(r->cr);        
+    printCSG(r->csg);
+    printSNAP(r->snap);
+    printCP(r->cp);
+    printCDH(r->cdh);    
+    printCR(r->cr);        
 
     // LOOKUP
     CSGTUPLE rt = createCSG("MTHs 173", "*", "Room 2");
