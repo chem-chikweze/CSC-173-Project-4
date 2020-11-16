@@ -43,20 +43,23 @@ unsigned long hashCDH (char* Course, char* Day, char* Hour){
     strcpy(str, Hour);
     val3 = atoi(str);
     val4 = val1*val2*val3;
-    hash = (val4 * BASE)% SIZE;   
+    hash = (val4 * BASE)% SIZE;  
+    printf("CDH Hash: %d", hash) ;
     return hash;
 }
 
 unsigned long hashCR (char* Course, char* Room){
-    unsigned long hash;
+    int hash;
     int val1,val2, val3;
     char str[100];
     strcpy(str, Course);
     val1 =  atoi(str);
     strcpy(str, Room);
     val2 = atoi(str);
-    val3 = val1*val2;
-    hash = (val3 * BASE)% SIZE;
+    val3 = val1*val2 + val1 * 47;
+    hash = ((val3 * BASE* 47) )% SIZE;
+
+    // printf("RMH%s%d\n", Room, hash);
     return hash;
 }
 
@@ -114,6 +117,8 @@ CRTUPLE createCR(char* Course, char* Room){
     tuple->next = NULL;
     strcpy(tuple->Course, Course);
     strcpy(tuple->Room, Room);
+   
+    printf("%s\t%s", tuple->Course, tuple->Room);
     return tuple;
 }
 
@@ -143,7 +148,6 @@ void insertCP(CPTUPLE tuple, CPTABLE table){
     // go to bucket,, walk through bucket for if it contains the struct or not.
     while ( table[hashIndex]){   hashIndex = (hashIndex + 1) % SIZE;    }
     table[hashIndex] = tuple;
-    printf("Error! opening file");
     // table[hashIndex] = (CPTUPLE)malloc(sizeof(CPTUPLE));
     // table[hashIndex]->Course = (char *)malloc(sizeof(char)*courseSize);
     // table[hashIndex]->Prerequisite = (char *)malloc(sizeof(char)*prereqSize);
@@ -169,25 +173,11 @@ void insertCDH(CDHTUPLE tuple, CDHTABLE table){
 
 void insertCR(CRTUPLE tuple, CRTABLE table){
     int hashIndex = hashCR(tuple->Course, tuple->Room);
-    printf("Hey");
     while ( table[hashIndex]){
-        hashIndex = (hashIndex + 1) % SIZE;    
+        hashIndex = (hashIndex + 1) % SIZE;
     }
     table[hashIndex] = tuple;
-
-    // printf("2");
-    // table[hashIndex] = (CRTUPLE)malloc(sizeof(CRTUPLE));
-    // printf("h3");
-    // table[hashIndex]->Course = (char *)malloc(sizeof(char)*courseSize);
-    // printf("h4");
-    // table[hashIndex]->Room = (char *)malloc(sizeof(char)*roomSize);
-    // printf("h5");
-    // table[hashIndex]->next = NULL;
-    // printf("6");
-    // strcpy(table[hashIndex]->Course, tuple->Course);
-    // printf("7");
-    // strcpy(table[hashIndex]->Room, tuple->Room);
-    // printf("8");
+        printf("\n%d\n", hashIndex);
 
 }
 
@@ -195,7 +185,7 @@ void printCSG(CSGTABLE t){
     for (int i = 0; i < CSGSIZE; i++)
     {   
         if (t[i] ){  
-            printf("\n%s", t[i]->Course);     
+            printf("\n%s\t%d\t%s", t[i]->Course,t[i]->StudentId,t[i]->Grade);     
         } 
     }
 }
@@ -204,19 +194,18 @@ void printSNAP(SNAPTABLE t){
     for (int i = 0; i < CSGSIZE; i++)
     {   
         if (t[i] ){     
-            printf("%s\t", t[i]->Name);     
-            printf("%d\t", t[i]->StudentId);     
-            printf("%s\t", t[i]->Address);     
-            printf("%d\n", t[i]->Phone);     
+            printf("%s\t%d\t%s\t%d\n", t[i]->Name, t[i]->StudentId, t[i]->Address, t[i]->Phone);     
+            // printf("%d\t", t[i]->StudentId);     
+            // printf("%s\t", t[i]->Address);     
+            // printf("%d\n", t[i]->Phone);     
         } 
     }
 }
 void printCP(CPTABLE t){
     for (int i = 0; i < CSGSIZE; i++)
     {   
-        if (t[i] ){     
-            printf("%s\t", t[i]->Course);        
-            printf("%s\n", t[i]->Prerequisite);     
+        if (t[i] ){   
+            printf("%s\t%s", t[i]->Course, t[i]->Prerequisite);     
         } 
     }
 }
@@ -224,9 +213,9 @@ void printCDH(CDHTABLE t){
     for (int i = 0; i < CSGSIZE; i++)
     {   
         if (t[i] ){     
-            printf("%s\t", t[i]->Course);        
-            printf("%s\t", t[i]->Day);        
-            printf("%s\n", t[i]->Hour);     
+            printf("%s\t%s\t%s", t[i]->Course, t[i]->Day, t[i]->Hour);        
+            // printf("%s\t", t[i]->Day);        
+            // printf("%s\n", t[i]->Hour);     
         } 
     }
 }
@@ -234,8 +223,7 @@ void printCR(CRTABLE t){
     for (int i = 0; i < CSGSIZE; i++)
     {   
         if (t[i] ){     
-            printf("%s\t", t[i]->Course);        
-            printf("%s\n", t[i]->Room);     
+            printf("%s\t%s", t[i]->Course, t[i]->Room);        
         } 
     }
 }
