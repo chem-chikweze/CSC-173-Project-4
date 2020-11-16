@@ -155,8 +155,11 @@ void insertCSG(CSGTUPLE tuple, CSGTABLE table){
     table[hashIndex]->Grade = (char *)malloc(sizeof(char)*gradeSize);
     table[hashIndex]->StudentId = tuple->StudentId;
     table[hashIndex]->next = NULL;
+        
     strcpy(table[hashIndex]->Course, tuple->Course);
     strcpy(table[hashIndex]->Grade, tuple->Grade);
+
+    printf("hello");
 }
 
 void insertSNAP(SNAPTUPLE tuple, SNAPTABLE table){
@@ -199,7 +202,9 @@ void insertCDH(CDHTUPLE tuple, CDHTABLE table){
 
 void insertCR(CRTUPLE tuple, CRTABLE table){
     int hashIndex = hashCR(tuple->Course, tuple->Room);
-    while ( table[hashIndex] !=NULL){
+    if ( table[hashCR(tuple->Course, tuple->Room)]->Course ==NULL){
+        printf("1");
+
         hashIndex = (hashIndex + 1) % SIZE;    
     }
     printf("2");
@@ -221,7 +226,7 @@ void insertCR(CRTUPLE tuple, CRTABLE table){
 void printCSG(CSGTABLE t){
     for (int i = 0; i < CSGSIZE; i++)
     {   
-        if (t[i] ){     
+        if (t[i] ){  
             printf("\n%s", t[i]->Course);     
         } 
     }
@@ -229,7 +234,7 @@ void printCSG(CSGTABLE t){
 
 void printSNAP(SNAPTABLE t){
     for (int i = 0; i < CSGSIZE; i++)
-    {   printf("%s", "hen");
+    {   
         if (t[i] ){     
             printf("\n%s\t%d\t%d\t%s", t[i]->Name, t[i]->StudentId, t[i]->Phone, t[i]->Address);     
         } 

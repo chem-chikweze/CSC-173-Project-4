@@ -27,22 +27,19 @@ db createDB(){
         *(dbase->cdh + i) = NULL;
 
     }
-
-    printf("\nend\n");
     return dbase;
 }
 
 void fromFIle(db r, char *f){
     FILE *fp;
     char line[100];
-
     if((fp = fopen(f, "r")) == NULL){
         printf("Error! opening file");
         exit(1);
     }
     
     while(fgets(line, 100, fp)){
-        const char delim[2] = "\t";
+        const char delim[2] = " ";
         char *token;
         int i=0, j;
 
@@ -50,7 +47,7 @@ void fromFIle(db r, char *f){
         token = strtok(line, delim);
         while(token){
             words[i] = token;
-            token = strtok(NULL, qq);
+            token = strtok(NULL, delim);
             i++;
         }
         
@@ -59,22 +56,14 @@ void fromFIle(db r, char *f){
         //     sscanf(words[3], "%d", studentid);
         //     CSGTUPLE t = createCSG(words[1], words[2], studentid);
         //     insertCSG(t, r->csg);
-           
         // }
-        if(strcmp(words[0], "SNAP")==0){
-            int phone;
-            sscanf(words[4], "%d", phone);
-            int studentid;
-            sscanf(words[1], "%d", studentid);
-            SNAPTUPLE t = createSNAP(studentid, words[2], words[3], phone);
-            insertSNAP(t, r->snap);
-            //  for(int j = 0; j< i; j++){
-            //     printf("%s\t", words[j]);
-            // }
-            printf("%s\t", words[j]);
-            printf("%s\t", words[j]);
-            printf("%s\t", words[j]);
-        }
+        // if(strcmp(words[0], "SNAP")==0){
+        //     int phone;
+        //     sscanf(words[4], "%d", phone);
+        //     int studentid;
+        //     sscanf(words[1], "%d", studentid);
+        //     SNAPTUPLE t = createSNAP(studentid, words[2], words[3], phone);
+        // }
         // if(strcmp(words[0], "CP")==0){
         //     CPTUPLE t = createCP(words[1], words[2]);
         //     insertCP(t, r->cp);
@@ -83,17 +72,16 @@ void fromFIle(db r, char *f){
         //     CDHTUPLE t = createCDH(words[1], words[2], words[3]);
         //     insertCDH(t, r->cdh);
         // }
-        // if(strcmp(words[0], "CR")==0){
-        //     CRTUPLE t = createCR(words[1], words[2]);
-        //     insertCR(t, r->cr);
-        // }
-        
-        
-        // // token = strtok(line, s);
-        // printf("%s", words[1]);
-       
-    
-    
+        if(strcmp(words[0], "CR")==0){
+            CRTUPLE t = createCR(words[1], words[2]);
+            // insertCR(t, r->cr);
+        }
+
+
+        for(int j = 0; j< i; j++){
+            // 
+            printf("%s\t", words[j]);
+        }
 
     }
     fclose(fp);

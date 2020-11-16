@@ -15,22 +15,26 @@
 7.  union
 8.  difference
 9.  insert
-10. projection
+10. projection    printf("1");
+
 11. join
 
 **/
 int main() {
     db r = createDB();
-    fromFIle(r, "input.txt");
+    // fromFIle(r, "input.txt");
+    CRTUPLE rt = createCR("MTHs 173", "Room 2");
+    insertCR(rt, r->cr);
   
 
-    printCSG(r->csg);
+    // printCSG(r->csg);
     // printSNAP(r->snap);
     // printCP(r->cp);
-    // printCDH(r->cdh);
+    // printCDH(r->cdh);    printf("1");
+
     // printCR(r->cr);
 
-    printf("\n%s\n", "print");
+    // printf("\n%s\n", "print");
     // printf("\n");
     // CSGTUPLE t1 = createCSGTuple("CSC 173", "A", 123);
     // delete(t1, r);
