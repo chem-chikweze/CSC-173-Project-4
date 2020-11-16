@@ -94,6 +94,12 @@ void deleteCP(CPTUPLE tuple, CPTABLE table);
 void deleteCDH(CDHTUPLE tuple, CDHTABLE table);
 void deleteCR(CRTUPLE tuple, CRTABLE table);
 
+// lookup
+CSGTUPLE lookupCSG(CSGTUPLE tuple, CSGTABLE table);
+SNAPTUPLE lookupSNAP(SNAPTUPLE tuple, SNAPTABLE table);
+CPTUPLE lookupCP(CPTUPLE tuple, CPTABLE table);
+CDHTUPLE lookupCDH(CDHTUPLE tuple, CDHTABLE table);
+CRTUPLE lookupCR(CRTUPLE tuple, CRTABLE table);
 //printf
 void printCSG(CSGTABLE t);
 void printSNAP(SNAPTABLE t);

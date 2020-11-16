@@ -23,15 +23,18 @@
 int main() {
     db r = createDB();
     fromFIle(r, "input.txt");
-    // CRTUPLE rt = createCR("MTHs 173", "Room 2");
-    // insertCR(rt, r->cr);
-  
-    printCSG(r->csg);
-    printSNAP(r->snap);
-    printCP(r->cp);
-    printCDH(r->cdh);    
-    printCR(r->cr);        
 
+    //PRINT
+    // printCSG(r->csg);
+    // printSNAP(r->snap);
+    // printCP(r->cp);
+    // printCDH(r->cdh);    
+    // printCR(r->cr);        
+
+    // LOOKUP
+    CSGTUPLE rt = createCSG("MTHs 173", "*", "Room 2");
+    CSGTUPLE t = lookupCSG(rt, r->csg);
+    // insertCR(rt, r->cr);
     // printf("\n%s\n", "print");
     // printf("\n");
     // CSGTUPLE t1 = createCSGTuple("CSC 173", "A", 123);

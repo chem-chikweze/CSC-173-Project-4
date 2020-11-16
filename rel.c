@@ -224,3 +224,14 @@ void printCR(CRTABLE t){
 }
 
 
+CSGTUPLE lookupCSG(CSGTUPLE tuple, CSGTABLE table){
+    if(tuple->Course != "*" && tuple->StudentId != "*"){
+        printf("f");
+        return NULL;
+    }
+    return NULL;
+}
+SNAPTUPLE lookupSNAP(SNAPTUPLE tuple, SNAPTABLE table){}
+CPTUPLE lookupCP(CPTUPLE tuple, CPTABLE table){}
+CDHTUPLE lookupCDH(CDHTUPLE tuple, CDHTABLE table){}
+CRTUPLE lookupCR(CRTUPLE tuple, CRTABLE table){}
