@@ -129,60 +129,39 @@ CRTUPLE createCR(char* Course, char* Room){
 
 void insertCSG(CSGTUPLE tuple, CSGTABLE table){
     unsigned long hashIndex = hashCSG(tuple->Course, tuple->StudentId);
-    // go to bucket,, walk through bucket for if it contains the struct or not.
-    tuple->next = table[hashIndex]
-    while ( table[hashIndex]){   hashIndex = (hashIndex + 1) % SIZE;    }
+    tuple->next = table[hashIndex];
     table[hashIndex] = tuple;
+    n++;
 }
 
 void insertSNAP(SNAPTUPLE tuple, SNAPTABLE table){
     unsigned long hashIndex = hashSNAP(tuple->StudentId);
-    while ( table[hashIndex]){   hashIndex = (hashIndex + 1) % SIZE;    }
+    tuple->next = table[hashIndex];
     table[hashIndex] = tuple;
-    // table[hashIndex] = (SNAPTUPLE)malloc(sizeof(SNAPTUPLE));
-    // table[hashIndex]->StudentId = tuple->StudentId;
-    // table[hashIndex]->Name = (char *)malloc(sizeof(char)*NameSize);
-    // table[hashIndex]->Address = (char *)malloc(sizeof(char)*AddressSize);
-    // table[hashIndex]->Phone = tuple->Phone;
-    // table[hashIndex]->next = NULL;
-    // strcpy(table[hashIndex]->Name, tuple->Name);
-    // strcpy(table[hashIndex]->Address, tuple->Address);
+    n++;
 }
 
 void insertCP(CPTUPLE tuple, CPTABLE table){
     int hashIndex = hashCP(tuple->Course, tuple->Prerequisite);
-    // go to bucket,, walk through bucket for if it contains the struct or not.
-    while ( table[hashIndex]){   hashIndex = (hashIndex + 1) % SIZE;    }
+    tuple->next = table[hashIndex];
     table[hashIndex] = tuple;
-    // table[hashIndex] = (CPTUPLE)malloc(sizeof(CPTUPLE));
-    // table[hashIndex]->Course = (char *)malloc(sizeof(char)*courseSize);
-    // table[hashIndex]->Prerequisite = (char *)malloc(sizeof(char)*prereqSize);
-    // table[hashIndex]->next = NULL;
-    // strcpy(table[hashIndex]->Course, tuple->Course);
-    // strcpy(table[hashIndex]->Prerequisite, tuple->Prerequisite);
+    n++;
+
 }
 
 void insertCDH(CDHTUPLE tuple, CDHTABLE table){
     int hashIndex = hashCDH(tuple->Course, tuple->Day, tuple->Hour);
-    while ( table[hashIndex]){   hashIndex = (hashIndex + 1) % SIZE;    }
+    tuple->next = table[hashIndex];
     table[hashIndex] = tuple;
+    n++;
 
-    // table[hashIndex] = (CDHTUPLE)malloc(sizeof(CDHTUPLE));
-    // table[hashIndex]->Course = (char *)malloc(sizeof(char)*courseSize);
-    // table[hashIndex]->Day = (char *)malloc(sizeof(char)*daySize);
-    // table[hashIndex]->Hour = (char *)malloc(sizeof(char)*hourSize);
-    // table[hashIndex]->next = NULL;
-    // strcpy(table[hashIndex]->Course, tuple->Course);
-    // strcpy(table[hashIndex]->Day, tuple->Day);
-    // strcpy(table[hashIndex]->Hour, tuple->Hour);
 }
 
 void insertCR(CRTUPLE tuple, CRTABLE table){
     int hashIndex = hashCR(tuple->Course, tuple->Room);
-    while ( table[hashIndex]){
-        hashIndex = (hashIndex + 1) % SIZE;
-    }
+    tuple->next = table[hashIndex];
     table[hashIndex] = tuple;
+    n++;
 }
 
 void printCSG(CSGTABLE t){
@@ -237,11 +216,8 @@ CSGTUPLE lookupCSG(CSGTUPLE tuple, CSGTABLE table){
     if(tuple->Course != "*" && tuple->StudentId != "*"){
         printf("f");
         int index = hashCSG(tuple->Course, tuple->StudentId);
-        // while (table[index]->Course != tuple->Course && table[index]->StudentId != tuple->StudentId)
-        // {
-        //     index = (index + 1) % SIZE;
-        // }
-        for(CSGTUPLE e = table[hhashCSG(tuple->Course, tuple->StudentId) % SIZE]; e != NULL; e = e->next){
+
+        for(CSGTUPLE e = table[hashCSG(tuple->Course, tuple->StudentId) % SIZE]; e != NULL; e = e->next){
             if(!strcmp(e->Course, tuple->Course) && !strcmp(e->StudentId, tuple->StudentId)){
                 return e;
             }
@@ -253,7 +229,10 @@ CSGTUPLE lookupCSG(CSGTUPLE tuple, CSGTABLE table){
     }
     return NULL;
 }
-SNAPTUPLE lookupSNAP(SNAPTUPLE tuple, SNAPTABLE table){}
+
+SNAPTUPLE lookupSNAP(SNAPTUPLE tuple, SNAPTABLE table){
+    return NULL;
+}
 CPTUPLE lookupCP(CPTUPLE tuple, CPTABLE table){}
 CDHTUPLE lookupCDH(CDHTUPLE tuple, CDHTABLE table){}
 CRTUPLE lookupCR(CRTUPLE tuple, CRTABLE table){}

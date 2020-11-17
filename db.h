@@ -27,6 +27,6 @@ struct db
 
 db createDB();
 void fromFIle(db r, char *f);
-
+void grow();
 
 #endif

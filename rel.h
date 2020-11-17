@@ -17,7 +17,7 @@
 #define phoneSize 12
 #define BASE (256)
 
-
+int n;
 //table 1: course studentid grade   CSG
 // add date. What part should it be? Attribute or key?
 typedef struct CSG *CSGTUPLE;

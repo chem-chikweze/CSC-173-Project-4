@@ -3,6 +3,7 @@
 
 
 db createDB(){
+    n = 0;
     db dbase = (db) malloc (sizeof(db));
     dbase->csg = (CSGTABLE)malloc(sizeof(CSGTABLE) * CSGSIZE);
     dbase->snap = (SNAPTABLE)malloc(sizeof(SNAPTABLE) * SNAPSIZE);
@@ -50,35 +51,11 @@ void fromFIle(db r, char *f){
             token = strtok(NULL, delim);
             i++;
         }
-        
-        // if(strcmp(words[0], "CSG")==0){
-        //     int studentid;
-        //     sscanf(words[3], "%d", studentid);
-        //     CSGTUPLE t = createCSG(words[1], words[2], studentid);
-        //     insertCSG(t, r->csg);
-        // }
-        // if(strcmp(words[0], "SNAP")==0){
-        //     int phone;
-        //     sscanf(words[4], "%d", phone);
-        //     int studentid;
-        //     sscanf(words[1], "%d", studentid);
-        //     SNAPTUPLE t = createSNAP(studentid, words[2], words[3], phone);
-        // }
-        // if(strcmp(words[0], "CP")==0){
-        //     CPTUPLE t = createCP(words[1], words[2]);
-        //     insertCP(t, r->cp);
-        // }
-        // if(strcmp(words[0], "CDH")==0){
-        //     CDHTUPLE t = createCDH(words[1], words[2], words[3]);
-        //     insertCDH(t, r->cdh);
-        // }
-        // if(strcmp(words[0], "CR")==0){
-        //     CRTUPLE t = createCR(words[1], words[2]);
-        //     // insertCR(t, r->cr);
-        // }
-
 
         for(int j = 0; j< i; j++){
+            if(n>= SIZE){
+                grow();
+            }
             
             if(strcmp(words[j], "CSG") == 0){
                 // int studentid;
