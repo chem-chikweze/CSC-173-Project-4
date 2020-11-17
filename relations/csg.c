@@ -8,17 +8,6 @@
 #define BASE (256)
 #define SIZE (1008)
 
-typedef struct CSG CSGTUPLE;
-struct CSG {
-    // a type but with no associated storage
-    char *StudentId;  //conjugate key
-    char *Course;    // = (char*) malloc (courseSize * sizeof(char)); //conjugate key
-    char *Grade;     //  = (char*) malloc (gradeSize * sizeof(char)); //conjugate key
-    CSGTUPLE* next;
-    int count;
-};
-// typedef CSGTUPLE CSGTABLE[SIZE];
-
 
 unsigned long hashCSG (char *Course, char *StudentId) {
     unsigned long hash;
@@ -178,44 +167,9 @@ void printCSG(CSGTUPLE** t){
     }
 }
 
-typedef struct database db;
-struct database{
-    CSGTUPLE** csg;
-    SNAPTUPLE** snap;
-    CPTUPLE** cp;
-    CDHTUPLE** cdh;
-    CRTUPLE** cr;
-};
-
-db createDB(){
-    int n = 0;
-    db *dbase =  malloc (sizeof(db));
-    (dbase->csg) = createCSGTABLE();
-    dbase->snap = createSNAPTABLE();
-    dbase->cp = createCPTABLE();
-    dbase->cdh = createCDHTABLE();
-    dbase->cr = createCRTABLE();
-
-    int i;
-    for(i =0; i < SIZE; i++){
-        dbase->csg[i] = NULL;
-    }
-    for(i =0; i < SIZE; i++){
-        dbase->snap[i] = NULL;
-    }
-    for(i =0; i < SIZE; i++){
-        dbase->cr[i] = NULL;
-    }
-    for(i =0; i < SIZE; i++){
-        dbase->cdh[i] = NULL;
-    }
-    for(i =0; i < SIZE; i++){
-        dbase->cp[i] = NULL;
-    }
-    return dbase;
-}
 
 int main() {
+    db = 
     CSGTUPLE** r = createCSGTABLE();
     insertCSG(createCSG("CSC 173", "123", "A"), r);
     insertCSG(createCSG("CSC 173", "123", "A"), r);
