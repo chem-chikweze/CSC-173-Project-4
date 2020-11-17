@@ -1,18 +1,11 @@
 #include "rel.h"
+#include "db.h"
 
 
-typedef struct database db;
-struct database{
-    CSGTUPLE** csg;
-    SNAPTUPLE** snap;
-    CPTUPLE** cp;
-    CDHTUPLE** cdh;
-    CRTUPLE** cr;
-};
-
-db *createDB(){
+// to star or not to star
+db createDB(){
     int n = 0;
-    db *dbase =  malloc (sizeof(db));
+    db *dbase =  (db*) malloc (sizeof(db));
     (dbase->csg) = createCSGTABLE();
     dbase->snap = createSNAPTABLE();
     dbase->cp = createCPTABLE();
@@ -37,3 +30,4 @@ db *createDB(){
     }
     return dbase;
 }
+

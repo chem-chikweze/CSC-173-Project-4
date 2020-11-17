@@ -3,10 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "rel.h"
-#define courseSize 5
-#define gradeSize 2
-#define BASE (256)
-#define SIZE (1008)
+#include "db.h"
+
 
 
 unsigned long hashCSG (char *Course, char *StudentId) {
@@ -26,6 +24,7 @@ unsigned long hashCSG (char *Course, char *StudentId) {
 
 CSGTUPLE** createCSGTABLE() {
     CSGTUPLE** ron = (CSGTUPLE**)calloc(SIZE, sizeof(CSGTUPLE*));
+    // printf("print");
     return ron;
 }
 
@@ -153,13 +152,15 @@ void insertCSG(CSGTUPLE* tuple, CSGTUPLE** table){
 // }
 
 void printCSG(CSGTUPLE** t){
-    printf("NULL\n");
     for (int i = 0; i < SIZE; i++)  {
         CSGTUPLE* head = t[i];
         if(head == NULL){
+        // printf("print");
+
         }else{
             CSGTUPLE* current = head;
             while(current != NULL){
+                // printf("ten");
                 printf("%s\t%s\t%s\t%d\n", current->Course,current->StudentId,current->Grade, current->count);
                 current = current->next;
             }
@@ -167,9 +168,8 @@ void printCSG(CSGTUPLE** t){
     }
 }
 
-
 int main() {
-    db = 
+    // db *d = createDB();
     CSGTUPLE** r = createCSGTABLE();
     insertCSG(createCSG("CSC 173", "123", "A"), r);
     insertCSG(createCSG("CSC 173", "123", "A"), r);
@@ -181,7 +181,35 @@ int main() {
     // printTable(r);
     return 0;
 }
+// int main() {
+    // db r = createDB();
+    // fromFIle(r, "input.txt");
 
+    // //PRINT
+    // printCSG(*(r->csg));
+    // printSNAP(r->snap);
+    // printCP(r->cp);
+    // printCDH(r->cdh);    
+    // printCR(r->cr);        
+
+    // LOOKUP
+    // CSGTUPLE rt = createCSG("CSC101", "12345", "*");
+    // CSGTUPLE t = lookupCSG(rt, r->csg);
+    // if(t !=NULL){
+    //     printf("%s", t->Grade);
+    // }else
+    // {
+    //     printf("\nh");
+    // }
+    
+    // insertCR(rt, r->cr);
+    // printf("\n%s\n", "print");
+    // printf("\n");
+    // CSGTUPLE t1 = createCSGTuple("CSC 173", "A", 123);
+    // delete(t1, r);
+    // printTable(r);
+//     return 0;
+// }
 
 
 // void insert(CSGTUPLE tuple, CSGTABLE table){
