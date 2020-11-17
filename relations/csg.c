@@ -18,21 +18,27 @@ struct CSG {
 // typedef CSGTUPLE CSGTABLE[SIZE];
 
 unsigned long hashCSG (char *Course, char *StudentId) {
+    printf("%s\t", StudentId);
     unsigned long hash = 0;
     int val1 = 0;
     const char *c = Course;
     while (c != NULL && *c != '\0')
     {
-        val1 += (intptr_t)c;
+        val1 += (int)c;
         ++c;
     }
+    printf("%d\t", val1);
+
     const char *s = StudentId;
     while (s != NULL && *s != '\0')
     {
-        val1 += (intptr_t)s;
+        val1 += (int)s;
         ++s;
     }
+    printf("%d\t", val1);
     hash = (val1 * 7)% SIZE;
+    printf("%d\n", hash);
+
     return hash;
 }
 
@@ -43,10 +49,12 @@ CSGTUPLE** createCSGTABLE() {
 
 CSGTUPLE* createCSG(char* Course, char *StudentId, char* Grade){
     CSGTUPLE *tuple = (CSGTUPLE*)malloc(sizeof(CSGTUPLE*));
-    tuple->Course = strdup(Course);
-    tuple->Grade = strdup(Grade);
-    printf("hey");
-    tuple->StudentId = strdup(StudentId);
+    const char *c = Course;
+    const char *s = StudentId;
+    const char *g = Grade;
+    tuple->Course = strdup(c);
+    tuple->StudentId = strdup(s);   
+    tuple->Grade = strdup(g);    
     tuple->next = NULL;
     return tuple;
 }
@@ -65,6 +73,8 @@ void insertCSGIntoListOfCSGs(CSGTUPLE* head, CSGTUPLE* t){
 
 void insertCSG(CSGTUPLE* tuple, CSGTUPLE** table){
     unsigned long hashIndex = hashCSG(tuple->Course, tuple->StudentId);
+    // printf("Insert%s\t%d\n", tuple->Course, hashIndex); 
+    
     hashIndex = hashIndex % SIZE;
     if(table[hashIndex] == NULL){
         table[hashIndex] = (CSGTUPLE*)malloc(sizeof(CSGTUPLE*));
@@ -153,11 +163,11 @@ void printCSG(CSGTUPLE** t){
     for (int i = 0; i < SIZE; i++)  {
         CSGTUPLE* head = t[i];
         if(head == NULL){
-            printf("NULL");
+            printf("a");
         }else{
             CSGTUPLE* current = head;
             while(current != NULL){
-                printf("NULL");
+                printf("s");
                 printf("%s\t%s\t%s", current->Course,current->StudentId,current->Grade);
                 current = current->next;
             }
@@ -167,9 +177,9 @@ void printCSG(CSGTUPLE** t){
 
 int main() {
     CSGTUPLE** r = createCSGTABLE();
-    CSGTUPLE* t = createCSG("CSC 173", "A", 123);
-    printf("NULL");
-    insertCSG(t, r);
+    insertCSG(createCSG("CSC 173", "123", "A"), r);
+    insertCSG(createCSG("CSC 173", "123", "A"), r);
+    insertCSG(createCSG("CSC 173", "123", "A"), r);
     printCSG(r);
     // printf("\n");
     // CSGTUPLE t1 = createTuple("CSC 173", "A", 123);
