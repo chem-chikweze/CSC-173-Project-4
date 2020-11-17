@@ -3,13 +3,14 @@
 typedef struct CSG *CSGTUPLE;
 struct CSG {
     char *Course; //conjugate key
-    int StudentId;  //conjugate key
+    char* StudentId;  //conjugate key
     char *Grade;
+    CSGTUPLE* next;
 };
 //table 2: StudentId Name Address Phone  SNAP
 typedef struct SNAP *SNAPTUPLE;
 struct SNAP {
-    int StudentId;  //k
+    char* StudentId;  //k
     char *Name;
     char *Address;
     int Phone;
