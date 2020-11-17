@@ -2,26 +2,26 @@
 #include "db.h"
 
 
-unsigned long hashCSG (char *Course, char *StudentId) {
-    unsigned long hash = 0;
-    int val1 = 0;
-    const char *c = Course;
-
-    while (c != NULL && *c != '\0')
-    {
-        val1 += (intptr_t)c;
-        ++c;
-    }
-    const char *s = StudentId;
-    while (s != NULL && *s != '\0')
-    {
-        val1 += (intptr_t)s;
-        ++s;
-    }
-
-    hash = (val1 * BASE)% SIZE;
-    return hash;
-}
+// unsigned long hashCSG (char *Course, char *StudentId) {
+//     unsigned long hash = 0;
+//     int val1 = 0;
+//     const char *c = Course;
+//
+//     while (c != NULL && *c != '\0')
+//     {
+//         val1 += (intptr_t)c;
+//         ++c;
+//     }
+//     const char *s = StudentId;
+//     while (s != NULL && *s != '\0')
+//     {
+//         val1 += (intptr_t)s;
+//         ++s;
+//     }
+//
+//     hash = (val1 * BASE)% SIZE;
+//     return hash;
+// }
 
 unsigned long hashSNAP (char *StudentId){
     unsigned long hash = 0;
@@ -82,14 +82,14 @@ unsigned long hashCR (char* Course, char* Room){
 
 
 
-CSGTUPLE createCSG(char* Course, char *StudentId, char* Grade){
-    CSGTUPLE tuple = (CSGTUPLE)malloc(sizeof(CSGTUPLE));
-    tuple->Course = strdup(Course);
-    tuple->Grade = strdup(Grade);
-    tuple->StudentId = strdup(StudentId);
-    tuple->next = NULL;
-    return tuple;
-}
+// CSGTUPLE createCSG(char* Course, char *StudentId, char* Grade){
+//     CSGTUPLE tuple = (CSGTUPLE)malloc(sizeof(CSGTUPLE));
+//     tuple->Course = strdup(Course);
+//     tuple->Grade = strdup(Grade);
+//     tuple->StudentId = strdup(StudentId);
+//     tuple->next = NULL;
+//     return tuple;
+// }
 
 SNAPTUPLE createSNAP(char *StudentId, char *Name, char* Address, char *Phone){
     SNAPTUPLE tuple = (SNAPTUPLE)malloc(sizeof(SNAPTUPLE));
@@ -135,7 +135,7 @@ void insertNodeCSG(CSGTABLE table){
 //     hashIndex = hashIndex % SIZE;
 //     if(table[hashIndex] == NULL){
 //         table[hashIndex] = malloc(sizeof(CSGTUPLE));
-
+//
 //         CSGTUPLE head = NULL;
 //         insertNodeCSG(&head, tuple);
 //         table[hashIndex] = head;
@@ -143,7 +143,7 @@ void insertNodeCSG(CSGTABLE table){
 //     {
 //         CSGTUPLE head = table[hashIndex];
 //         insertListCSG(&head, table);
-        
+//       
 //         table[hashIndex] = head;
 //     }
 // //     tuple->next = table[hashIndex];
@@ -184,20 +184,20 @@ void insertCR(CRTUPLE tuple, CRTABLE table){
     n++;
 }
 
-void printCSG(CSGTABLE t){
-    for (int i = 0; i < 45; i++)  {
-        for(CSGTUPLE e = t[i]; e != NULL; e = e->next){
-            printf("%s\t%s\t%s", t[i]->Course,t[i]->StudentId,t[i]->Grade);
-        }
-    }
-
-    // for (int i = 0; i < CSGSIZE; i++)
-    // {   
-    //     if (t[i] ){  
-    //         printf("\n%s\t%d\t%s", t[i]->Course,t[i]->StudentId,t[i]->Grade);     
-    //     } 
-    // }
-}
+// void printCSG(CSGTABLE t){
+//     for (int i = 0; i < 45; i++)  {
+//         for(CSGTUPLE e = t[i]; e != NULL; e = e->next){
+//             printf("%s\t%s\t%s", t[i]->Course,t[i]->StudentId,t[i]->Grade);
+//         }
+//     }
+//
+//     // for (int i = 0; i < CSGSIZE; i++)
+//     // {   
+//     //     if (t[i] ){  
+//     //         printf("\n%s\t%d\t%s", t[i]->Course,t[i]->StudentId,t[i]->Grade);     
+//     //     } 
+//     // }
+// }
 
 void printSNAP(SNAPTABLE t){
     for (int i = 0; i < CSGSIZE; i++)
@@ -238,88 +238,88 @@ void printCR(CRTABLE t){
 }
 
 
-CSGTUPLE lookupCSG(CSGTUPLE tuple, CSGTABLE table){
-    // printf("%s\t%s\n", tuple->Course, tuple->Grade);
-
-    // C S G or C S *
-    if(strcmp(tuple->Course,"*") != 0 && strcmp(tuple->StudentId, "*") != 0){
-        printf("f");
-        int index = hashCSG(tuple->Course, tuple->StudentId);
-        for(CSGTUPLE e = table[hashCSG(tuple->Course, tuple->StudentId) % SIZE]; e != NULL; e = e->next){
-            if(!strcmp(e->Course, tuple->Course) && !strcmp(e->StudentId, tuple->StudentId)){
-                return e;
-            }
-        }
-        return 0;
-
-    }
-    // * S G
-    else if( !strcmp(tuple->Course,"*") && strcmp(tuple->StudentId, "*") != 0 && strcmp(tuple->Grade, "*") != 0 ){
-        for (int i = 0; i < SIZE; i++)  {
-            for(CSGTUPLE e = table[i]; e != NULL; e = e->next){
-                if(!strcmp(e->StudentId, tuple->StudentId) && !strcmp(tuple->Grade, tuple->Grade)){
-                    return e;
-                }
-            }
-        }
-    }
-    // * S *
-    else if( !strcmp(tuple->Course,"*") && strcmp(tuple->StudentId, "*") != 0 && !strcmp(tuple->Grade, "*") ){
-        for (int i = 0; i < SIZE; i++)  {
-            for(CSGTUPLE e = table[i]; e != NULL; e = e->next){
-                if(!strcmp(e->StudentId, tuple->StudentId)){
-                    return e;
-                }
-            }
-        }
-    }
-
-    // C * G
-    else if( strcmp(tuple->Course,"*") != 0 && !strcmp(tuple->StudentId, "*") && strcmp(tuple->Grade, "*") != 0 ){
-        for (int i = 0; i < SIZE; i++)  {
-            for(CSGTUPLE e = table[i]; e != NULL; e = e->next){
-                if(!strcmp(e->Grade, tuple->Grade) && !strcmp(tuple->Course, tuple->Course)){
-                    return e;
-                }
-            }
-        }
-    }
-    // C * *
-    else if( strcmp(tuple->Course,"*") != 0 && !strcmp(tuple->StudentId, "*") && !strcmp(tuple->Grade, "*") ){
-        for (int i = 0; i < SIZE; i++)  {
-            for(CSGTUPLE e = table[i]; e != NULL; e = e->next){
-                if(!strcmp(tuple->Course, tuple->Course)){
-                    printf("%s", e->Course);
-                    return e;
-                }
-            }
-        }
-    }
-
-    // * * G
-    else if(!strcmp(tuple->Course,"*") && !strcmp(tuple->StudentId, "*") && strcmp(tuple->Grade, "*") != 0){
-        for (int i = 0; i < SIZE; i++)  {
-            for(CSGTUPLE e = table[i]; e != NULL; e = e->next){
-                if(!strcmp(e->Grade, tuple->Grade)){
-                    return e;
-                }
-            }
-        }
-    }
-
-    // * * *
-    else if(!strcmp(tuple->Course,"*") && !strcmp(tuple->StudentId, "*") && !strcmp(tuple->Grade, "*")){
-        for (int i = 0; i < SIZE; i++)  {
-            for(CSGTUPLE e = table[i]; e != NULL; e = e->next){
-
-                return e;
-
-            }
-        }
-    }
-    
-    return NULL;
-}
+// CSGTUPLE lookupCSG(CSGTUPLE tuple, CSGTABLE table){
+//     // printf("%s\t%s\n", tuple->Course, tuple->Grade);
+// /
+//     // C S G or C S *
+//     if(strcmp(tuple->Course,"*") != 0 && strcmp(tuple->StudentId, "*") != 0){
+//         printf("f");
+//         int index = hashCSG(tuple->Course, tuple->StudentId);
+//         for(CSGTUPLE e = table[hashCSG(tuple->Course, tuple->StudentId) % SIZE]; e != NULL; e = e->next){
+//             if(!strcmp(e->Course, tuple->Course) && !strcmp(e->StudentId, tuple->StudentId)){
+//                 return e;
+//             }
+//         }
+//         return 0;
+// 
+//     }
+//     // * S G
+//     else if( !strcmp(tuple->Course,"*") && strcmp(tuple->StudentId, "*") != 0 && strcmp(tuple->Grade, "*") != 0 ){
+//         for (int i = 0; i < SIZE; i++)  {
+//             for(CSGTUPLE e = table[i]; e != NULL; e = e->next){
+//                 if(!strcmp(e->StudentId, tuple->StudentId) && !strcmp(tuple->Grade, tuple->Grade)){
+//                     return e;
+//                 }
+//             }
+//         }
+//     }
+//     // * S *
+//     else if( !strcmp(tuple->Course,"*") && strcmp(tuple->StudentId, "*") != 0 && !strcmp(tuple->Grade, "*") ){
+//         for (int i = 0; i < SIZE; i++)  {
+//             for(CSGTUPLE e = table[i]; e != NULL; e = e->next){
+//                 if(!strcmp(e->StudentId, tuple->StudentId)){
+//                     return e;
+//                 }
+//             }
+//         }
+//     }
+// 
+//     // C * G
+//     else if( strcmp(tuple->Course,"*") != 0 && !strcmp(tuple->StudentId, "*") && strcmp(tuple->Grade, "*") != 0 ){
+//         for (int i = 0; i < SIZE; i++)  {
+//             for(CSGTUPLE e = table[i]; e != NULL; e = e->next){
+//                 if(!strcmp(e->Grade, tuple->Grade) && !strcmp(tuple->Course, tuple->Course)){
+//                     return e;
+//                 }
+//             }
+//         }
+//     }
+//     // C * *
+//     else if( strcmp(tuple->Course,"*") != 0 && !strcmp(tuple->StudentId, "*") && !strcmp(tuple->Grade, "*") ){
+//         for (int i = 0; i < SIZE; i++)  {
+//             for(CSGTUPLE e = table[i]; e != NULL; e = e->next){
+//                 if(!strcmp(tuple->Course, tuple->Course)){
+//                     printf("%s", e->Course);
+//                     return e;
+//                 }
+//             }
+//         }
+//     }
+// 
+//     // * * G
+//     else if(!strcmp(tuple->Course,"*") && !strcmp(tuple->StudentId, "*") && strcmp(tuple->Grade, "*") != 0){
+//         for (int i = 0; i < SIZE; i++)  {
+//             for(CSGTUPLE e = table[i]; e != NULL; e = e->next){
+//                 if(!strcmp(e->Grade, tuple->Grade)){
+//                     return e;
+//                 }
+//             }
+//         }
+//     }
+// 
+//     // * * *
+//     else if(!strcmp(tuple->Course,"*") && !strcmp(tuple->StudentId, "*") && !strcmp(tuple->Grade, "*")){
+//         for (int i = 0; i < SIZE; i++)  {
+//             for(CSGTUPLE e = table[i]; e != NULL; e = e->next){
+// 
+//                 return e;
+// 
+//             }
+//         }
+//     }
+//    
+//     return NULL;
+// }
 
 // SNAPTUPLE lookupSNAP(SNAPTUPLE tuple, SNAPTABLE table){
 //     return NULL;

@@ -1,15 +1,16 @@
 #include "rel.h"
 #include "db.h"
+#include "csg.c"
 
 
 db createDB(){
     n = 0;
     db dbase = (db) malloc (sizeof(db));
-    dbase->csg = (CSGTABLE)malloc(sizeof(CSGTABLE) * CSGSIZE);
-    dbase->snap = (SNAPTABLE)malloc(sizeof(SNAPTABLE) * SNAPSIZE);
-    dbase->cp = (CPTABLE)malloc(sizeof(CPTABLE) * CPSIZE);
-    dbase->cdh = (CDHTABLE)malloc(sizeof(CDHTABLE) * CDHSIZE);
-    dbase->cr = (CRTABLE)malloc(sizeof(CRTABLE) * CRSIZE);
+    dbase->csg = (CSGTABLE)malloc(sizeof(CSGTABLE) * SIZE);
+    dbase->snap = (SNAPTABLE)malloc(sizeof(SNAPTABLE) * SIZE);
+    dbase->cp = (CPTABLE)malloc(sizeof(CPTABLE) * SIZE);
+    dbase->cdh = (CDHTABLE)malloc(sizeof(CDHTABLE) * SIZE);
+    dbase->cr = (CRTABLE)malloc(sizeof(CRTABLE) * SIZE);
 
     int i;
     for(i =0; i < SIZE; i++){

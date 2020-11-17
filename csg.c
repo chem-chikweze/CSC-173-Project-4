@@ -67,7 +67,7 @@ void printCSG(CSGTABLE t){
         }else{
             CSGTUPLE current = head;
             while(current != NULL){
-                printf("%s\t%s\t%s", t[i]->Course,t[i]->StudentId,t[i]->Grade);
+                printf("%s\t%s\t%s\n", t[i]->Course,t[i]->StudentId,t[i]->Grade);
                 current = current->next;
             }
         }
