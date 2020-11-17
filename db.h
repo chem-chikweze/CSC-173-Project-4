@@ -16,7 +16,7 @@
 typedef struct database *db;
 struct database
 {
-    CSGTABLE csg;
+    CSGTABLE *csg;
     SNAPTABLE snap;
     CPTABLE cp;
     CDHTABLE cdh;
@@ -24,7 +24,7 @@ struct database
 };
 
 db createDB();
-void fromFIle(db r, char *f);
+void fromFIle(db r, const char *f);
 void grow();
 
 #endif

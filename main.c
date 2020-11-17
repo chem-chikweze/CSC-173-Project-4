@@ -25,7 +25,6 @@ int main() {
     fromFIle(r, "input.txt");
 
     //PRINT
-    printf("");
     printCSG(r->csg);
     // printSNAP(r->snap);
     // printCP(r->cp);

@@ -27,7 +27,7 @@ struct CSG {
     char *Grade;
     CSGTUPLE next;
 };
-typedef struct CSG** CSGTABLE;
+typedef CSGTUPLE CSGTABLE[100];
 
 //table 2: StudentId Name Address Phone  SNAP
 typedef struct SNAP *SNAPTUPLE;

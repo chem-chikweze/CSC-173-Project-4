@@ -6,11 +6,11 @@
 db createDB(){
     n = 0;
     db dbase = (db) malloc (sizeof(db));
-    dbase->csg = (CSGTABLE)malloc(sizeof(CSGTABLE) * SIZE);
-    dbase->snap = (SNAPTABLE)malloc(sizeof(SNAPTABLE) * SIZE);
-    dbase->cp = (CPTABLE)malloc(sizeof(CPTABLE) * SIZE);
-    dbase->cdh = (CDHTABLE)malloc(sizeof(CDHTABLE) * SIZE);
-    dbase->cr = (CRTABLE)malloc(sizeof(CRTABLE) * SIZE);
+    dbase->csg = calloc(SIZE, sizeof(CSGTUPLE));
+    dbase->snap = (SNAPTABLE) calloc(SIZE, sizeof(SNAPTUPLE));
+    dbase->cp = (CPTABLE)calloc(SIZE, sizeof(CPTUPLE));
+    dbase->cdh = (CDHTABLE)calloc(SIZE, sizeof(CDHTUPLE));
+    dbase->cr = (CRTABLE)calloc(SIZE, sizeof(CRTUPLE));
 
     int i;
     for(i =0; i < SIZE; i++){
@@ -32,7 +32,7 @@ db createDB(){
     return dbase;
 }
 
-void fromFIle(db r, char *f){
+void fromFIle(db r, const char *f){
     FILE *fp;
     char line[100];
     if((fp = fopen(f, "r")) == NULL){
@@ -62,14 +62,10 @@ void fromFIle(db r, char *f){
                 // int studentid;
                 // sscanf(words[2], "%d", &studentid);
                 CSGTUPLE t = createCSG(words[1], words[2], words[3]);
+                // printf("%s\t%s\t%s",t->Course, t->StudentId, t->Grade);
                 insertCSG(t, r->csg);
-                // printf("%s%s%d\n",t->Course, t->Grade, studentid);
             }
             else if(strcmp(words[j], "SNAP") == 0){
-                // int phone;
-                // sscanf(words[4], "%d", &phone);
-                // int studentid;
-                // sscanf(words[1], "%d", &studentid);
                 SNAPTUPLE t = createSNAP(words[1], words[2], words[3], words[4]);
                 insertSNAP(t, r->snap);
                 // printf("%s\t%d\t%d\t%s\n",t->Address, phone, t->Name, studentid);
