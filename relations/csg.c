@@ -18,37 +18,30 @@ struct CSG {
 // typedef CSGTUPLE CSGTABLE[SIZE];
 
 unsigned long hashCSG (char *Course, char *StudentId) {
-    printf("%s\t", StudentId);
-    unsigned long hash = 0;
-    int val1 = 0;
-    const char *c = Course;
-    while (c != NULL && *c != '\0')
-    {
-        val1 += (int)c;
-        ++c;
+    unsigned long hash;
+    // elements will be treated as having values greater than 0
+    hash = 0;
+    // loops until the end of chars in Course
+    for(char c = 0; c <strlen(StudentId); c++){
+        hash += StudentId[c];
     }
-    printf("%d\t", val1);
-
-    const char *s = StudentId;
-    while (s != NULL && *s != '\0')
-    {
-        val1 += (int)s;
-        ++s;
+    // loops until the end of chars in Course
+    for(char d = 0; d <strlen(Course); d++){
+        hash += Course[d];
     }
-    printf("%d\t", val1);
-    hash = (val1 * 7)% SIZE;
-    printf("%d\n", hash);
-
     return hash;
 }
 
 CSGTUPLE** createCSGTABLE() {
-    CSGTUPLE** ron = calloc(SIZE, sizeof(CSGTUPLE*));
+    CSGTUPLE** ron = (CSGTUPLE**)calloc(SIZE, sizeof(CSGTUPLE*));
     return ron;
 }
 
 CSGTUPLE* createCSG(char* Course, char *StudentId, char* Grade){
     CSGTUPLE *tuple = (CSGTUPLE*)malloc(sizeof(CSGTUPLE*));
+    (tuple->Course) = (char*)malloc(sizeof(char)*20);
+    tuple->StudentId = (char*)malloc(sizeof(char)*20);
+    tuple->Grade = (char*)malloc(sizeof(char)*20);
     const char *c = Course;
     const char *s = StudentId;
     const char *g = Grade;
