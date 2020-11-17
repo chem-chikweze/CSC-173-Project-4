@@ -150,6 +150,39 @@ void insertCSG(CSGTUPLE* tuple, CSGTUPLE** table){
 //         if (t[i] ){     printf("%s", t[i]->Course);     } 
 //     }
 // }
+void fromfileCSG(CSGTUPLE** r, const char* f){
+    FILE *fp;
+    char line[100];
+    if((fp = fopen(f, "r")) == NULL){
+        printf("Error! opening file");
+        exit(1);
+    }
+    
+    while(fgets(line, 100, fp)){
+        const char delim[2] = "|";
+        char *token;
+        int i=0, j;
+
+        char *words[20];
+        token = strtok(line, delim);
+        while(token){
+            words[i] = token;
+            token = strtok(NULL, delim);
+            i++;
+        }
+
+        for(int j = 0; j< i; j++){
+            if(n>= SIZE){
+                grow();
+            }
+            if(strcmp(words[j], "CSG") == 0){
+                // printf("%s\t%s\t%s",t->Course, t->StudentId, t->Grade);
+                insertCSG(createCSG(words[1], words[2], words[3]), r);
+            }
+        }
+    }
+    fclose(fp);
+}
 
 void printCSG(CSGTUPLE** t){
     for (int i = 0; i < SIZE; i++)  {
@@ -171,6 +204,7 @@ void printCSG(CSGTUPLE** t){
 int main() {
     // db *d = createDB();
     CSGTUPLE** r = createCSGTABLE();
+    fromfileCSG(r, "input.txt");
     insertCSG(createCSG("CSC 173", "123", "A"), r);
     insertCSG(createCSG("CSC 173", "123", "A"), r);
     insertCSG(createCSG("CSC 173", "123", "A"), r);
