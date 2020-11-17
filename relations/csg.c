@@ -14,6 +14,7 @@ struct CSG {
     char *Course;    // = (char*) malloc (courseSize * sizeof(char)); //conjugate key
     char *Grade;     //  = (char*) malloc (gradeSize * sizeof(char)); //conjugate key
     CSGTUPLE* next;
+    int count;
 };
 // typedef CSGTUPLE CSGTABLE[SIZE];
 
@@ -49,18 +50,24 @@ CSGTUPLE* createCSG(char* Course, char *StudentId, char* Grade){
     tuple->StudentId = strdup(s);   
     tuple->Grade = strdup(g);    
     tuple->next = NULL;
+    // printf("%s\t%s\t%s\n", tuple->Course, tuple->StudentId, tuple->Grade);
     return tuple;
 }
 
 void insertCSGIntoListOfCSGs(CSGTUPLE* head, CSGTUPLE* t){
+    int c = 0;
     if(head == NULL){
         head = t;
+        head->count = c;
     }else{
         CSGTUPLE* current = head;
         while(current->next != NULL){
             current = current->next;
+            ++c;
         }
+        current->count = c;
         current->next = t;
+        
     }
 }
 
@@ -71,13 +78,16 @@ void insertCSG(CSGTUPLE* tuple, CSGTUPLE** table){
     hashIndex = hashIndex % SIZE;
     if(table[hashIndex] == NULL){
         table[hashIndex] = (CSGTUPLE*)malloc(sizeof(CSGTUPLE*));
-        CSGTUPLE* head = NULL;
-        insertCSGIntoListOfCSGs(head, tuple);
-        table[hashIndex] = head;
+        table[hashIndex]->count = 0;
+        table[hashIndex]->Course = strdup(tuple->Course);
+        table[hashIndex]->Grade = strdup(tuple->Grade);
+        table[hashIndex]->StudentId = strdup(tuple->StudentId);
+        table[hashIndex]->next = NULL;
     }else{
         CSGTUPLE* head = table[hashIndex];
         insertCSGIntoListOfCSGs(head, tuple);
         table[hashIndex] = head;
+        // printf("%d\n",table[hashIndex]->count);
     }
 }
 
@@ -152,20 +162,80 @@ void insertCSG(CSGTUPLE* tuple, CSGTUPLE** table){
 // }
 
 void printCSG(CSGTUPLE** t){
-    printf("NULL");
+    printf("NULL\n");
     for (int i = 0; i < SIZE; i++)  {
         CSGTUPLE* head = t[i];
         if(head == NULL){
-            printf("a");
         }else{
             CSGTUPLE* current = head;
             while(current != NULL){
-                printf("s");
-                printf("%s\t%s\t%s", current->Course,current->StudentId,current->Grade);
+                printf("%s\t%s\t%s\t%d\n", current->Course,current->StudentId,current->Grade, current->count);
                 current = current->next;
             }
         }
     }
+}
+
+
+void fromFIle(db r, char *f){
+    FILE *fp;
+    char line[100];
+    if((fp = fopen(f, "r")) == NULL){
+        printf("Error! opening file");
+        exit(1);
+    }
+    
+    while(fgets(line, 100, fp)){
+        const char delim[2] = "|";
+        char *token;
+        int i=0, j;
+
+        char *words[20];
+        token = strtok(line, delim);
+        while(token){
+            words[i] = token;
+            token = strtok(NULL, delim);
+            i++;
+        }
+      
+        for(int j = 0; j< i; j++){
+            
+            if(strcmp(words[j], "CSG") == 0){
+                // int studentid;
+                // sscanf(words[2], "%d", &studentid);
+                CSGTUPLE t = createCSG(words[1], words[2], words[3]);
+                insertCSG(t, r->csg);
+                // printf("%s%s%d\n",t->Course, t->Grade, studentid);
+            }
+            else if(strcmp(words[j], "SNAP") == 0){
+                // int phone;
+                // sscanf(words[4], "%d", &phone);
+                // int studentid;
+                // sscanf(words[1], "%d", &studentid);
+                SNAPTUPLE t = createSNAP(words[1], words[2], words[3], words[4]);
+                insertSNAP(t, r->snap);
+                // printf("%s\t%d\t%d\t%s\n",t->Address, phone, t->Name, studentid);
+            }
+             if(strcmp(words[j], "CP") == 0){
+                CPTUPLE t = createCP(words[1], words[2]);
+                insertCP(t, r->cp);
+                // printf("2");
+                // printf("%s\t%s",t->Course, t->Prerequisite);
+            }
+            if(strcmp(words[j], "CDH") == 0){
+                CDHTUPLE t = createCDH(words[1], words[2], words[3]);
+                insertCDH(t, r->cdh);
+            }
+            if(strcmp(words[j], "CR") == 0){
+                CRTUPLE t = createCR(words[1], words[2]);
+                insertCR(t, r->cr);
+
+            }
+        }
+
+    }
+    fclose(fp);
+
 }
 
 int main() {
