@@ -5,7 +5,7 @@
 db createDB(){
     n = 0;
     db dbase = (db) malloc (sizeof(db));
-    dbase->csg = (CSGTABLE)malloc(sizeof(CSGTABLE) * CSGSIZE);
+    dbase->csg = malloc(sizeof(CSGTABLE) * CSGSIZE);
     dbase->snap = (SNAPTABLE)malloc(sizeof(SNAPTABLE) * SNAPSIZE);
     dbase->cp = (CPTABLE)malloc(sizeof(CPTABLE) * CPSIZE);
     dbase->cdh = (CDHTABLE)malloc(sizeof(CDHTABLE) * CDHSIZE);
@@ -18,16 +18,16 @@ db createDB(){
     for(i =0; i < SIZE; i++){
         *(dbase->csg + i) = NULL;
     }
-    for(i =0; i < SIZE; i++){
-        *(dbase->snap + i) = NULL;
-    }
-    for(i =0; i < SIZE; i++){
-        *(dbase->cp + i) = NULL;
-    }
-    for(i =0; i < SIZE; i++){
-        *(dbase->cdh + i) = NULL;
+    // for(i =0; i < SIZE; i++){
+    //     *(dbase->snap + i) = NULL;
+    // }
+    // for(i =0; i < SIZE; i++){
+    //     *(dbase->cp + i) = NULL;
+    // }
+    // for(i =0; i < SIZE; i++){
+    //     *(dbase->cdh + i) = NULL;
 
-    }
+    // }
     return dbase;
 }
 

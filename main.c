@@ -22,10 +22,10 @@
 **/
 int main() {
     db r = createDB();
-    fromFIle(r, "input.txt");
+    // fromFIle(r, "input.txt");
 
-    //PRINT
-    printCSG(r->csg);
+    // //PRINT
+    // printCSG(*(r->csg));
     // printSNAP(r->snap);
     // printCP(r->cp);
     // printCDH(r->cdh);    

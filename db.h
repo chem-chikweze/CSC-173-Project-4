@@ -16,11 +16,11 @@
 typedef struct database *db;
 struct database
 {
-    CSGTABLE *csg;
-    SNAPTABLE snap;
-    CPTABLE cp;
-    CDHTABLE cdh;
-    CRTABLE cr;
+    CSGTABLE csg;
+    SNAPTABLE *snap;
+    CPTABLE *cp;
+    CDHTABLE *cdh;
+    CRTABLE *cr;
 };
 
 db createDB();

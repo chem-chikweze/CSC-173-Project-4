@@ -6,30 +6,32 @@
 db createDB(){
     n = 0;
     db dbase = (db) malloc (sizeof(db));
-    dbase->csg = calloc(SIZE, sizeof(CSGTUPLE));
-    dbase->snap = (SNAPTABLE) calloc(SIZE, sizeof(SNAPTUPLE));
-    dbase->cp = (CPTABLE)calloc(SIZE, sizeof(CPTUPLE));
-    dbase->cdh = (CDHTABLE)calloc(SIZE, sizeof(CDHTUPLE));
-    dbase->cr = (CRTABLE)calloc(SIZE, sizeof(CRTUPLE));
-
-    int i;
-    for(i =0; i < SIZE; i++){
-        *(dbase->cr + i) = NULL;
-    }
-    for(i =0; i < SIZE; i++){
-        *(dbase->csg + i) = NULL;
-    }
-    for(i =0; i < SIZE; i++){
-        *(dbase->snap + i) = NULL;
-    }
-    for(i =0; i < SIZE; i++){
-        *(dbase->cp + i) = NULL;
-    }
-    for(i =0; i < SIZE; i++){
-        *(dbase->cdh + i) = NULL;
-
-    }
+    dbase->csg = createCSGTable();
     return dbase;
+
+    // dbase->snap = (SNAPTABLE) calloc(SIZE, sizeof(SNAPTUPLE));
+    // dbase->cp = (CPTABLE)calloc(SIZE, sizeof(CPTUPLE));
+    // dbase->cdh = (CDHTABLE)calloc(SIZE, sizeof(CDHTUPLE));
+    // dbase->cr = (CRTABLE)calloc(SIZE, sizeof(CRTUPLE));
+
+    // int i;
+    // for(i =0; i < SIZE; i++){
+    //     dbase->csg->table[i] = NULL;
+    // }
+    // // for(i =0; i < SIZE; i++){
+    // //     *(dbase->cr + i) = NULL;
+    // // }
+
+    // for(i =0; i < SIZE; i++){
+    //     *(dbase->snap + i) = NULL;
+    // }
+    // for(i =0; i < SIZE; i++){
+    //     *(dbase->cp + i) = NULL;
+    // }
+    // for(i =0; i < SIZE; i++){
+    //     *(dbase->cdh + i) = NULL;
+
+    // }
 }
 
 void fromFIle(db r, const char *f){
@@ -63,28 +65,28 @@ void fromFIle(db r, const char *f){
                 // sscanf(words[2], "%d", &studentid);
                 CSGTUPLE t = createCSG(words[1], words[2], words[3]);
                 // printf("%s\t%s\t%s",t->Course, t->StudentId, t->Grade);
-                insertCSG(t, r->csg);
+                insertCSGTable(t, (r->csg));
             }
-            else if(strcmp(words[j], "SNAP") == 0){
-                SNAPTUPLE t = createSNAP(words[1], words[2], words[3], words[4]);
-                insertSNAP(t, r->snap);
-                // printf("%s\t%d\t%d\t%s\n",t->Address, phone, t->Name, studentid);
-            }
-             if(strcmp(words[j], "CP") == 0){
-                CPTUPLE t = createCP(words[1], words[2]);
-                insertCP(t, r->cp);
-                // printf("2");
-                // printf("%s\t%s",t->Course, t->Prerequisite);
-            }
-            if(strcmp(words[j], "CDH") == 0){
-                CDHTUPLE t = createCDH(words[1], words[2], words[3]);
-                insertCDH(t, r->cdh);
-            }
-            if(strcmp(words[j], "CR") == 0){
-                CRTUPLE t = createCR(words[1], words[2]);
-                insertCR(t, r->cr);
+            // else if(strcmp(words[j], "SNAP") == 0){
+            //     SNAPTUPLE t = createSNAP(words[1], words[2], words[3], words[4]);
+            //     insertSNAP(t, r->snap);
+            //     // printf("%s\t%d\t%d\t%s\n",t->Address, phone, t->Name, studentid);
+            // }
+            //  if(strcmp(words[j], "CP") == 0){
+            //     CPTUPLE t = createCP(words[1], words[2]);
+            //     insertCP(t, r->cp);
+            //     // printf("2");
+            //     // printf("%s\t%s",t->Course, t->Prerequisite);
+            // }
+            // if(strcmp(words[j], "CDH") == 0){
+            //     CDHTUPLE t = createCDH(words[1], words[2], words[3]);
+            //     insertCDH(t, r->cdh);
+            // }
+            // if(strcmp(words[j], "CR") == 0){
+            //     CRTUPLE t = createCR(words[1], words[2]);
+            //     insertCR(t, r->cr);
 
-            }
+            // }
         }
 
     }
