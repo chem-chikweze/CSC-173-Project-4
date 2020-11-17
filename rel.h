@@ -22,12 +22,12 @@ int n;
 // add date. What part should it be? Attribute or key?
 typedef struct CSG *CSGTUPLE;
 struct CSG {
-    char *Course; //conjugate key
-    char *StudentId;  //conjugate key
+    char *Course;       //conjugate key
+    char *StudentId;    //conjugate key
     char *Grade;
     CSGTUPLE next;
 };
-typedef CSGTUPLE* CSGTABLE;
+typedef struct CSG** CSGTABLE;
 
 //table 2: StudentId Name Address Phone  SNAP
 typedef struct SNAP *SNAPTUPLE;

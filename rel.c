@@ -126,9 +126,6 @@ CRTUPLE createCR(char* Course, char* Room){
     return tuple;
 }
 
-void insertNodeCSG(CSGTABLE table){
-
-}
 
 // void insertCSG(CSGTUPLE tuple, CSGTABLE table){
 //     unsigned long hashIndex = hashCSG(tuple->Course, tuple->StudentId);

@@ -18,8 +18,7 @@ unsigned long hashCSG (char *Course, char *StudentId) {
         val1 += (intptr_t)s;
         ++s;
     }
-
-    hash = (val1 * BASE)% SIZE;
+    hash = (val1 * 7)% SIZE;
     return hash;
 }
 
@@ -35,33 +34,30 @@ CSGTUPLE createCSG(char* Course, char *StudentId, char* Grade){
 void insertCSGIntoListOfCSGs(CSGTUPLE head, CSGTUPLE t){
     if(head == NULL){
         head = t;
+        // return head;
     }else{
         CSGTUPLE current = head;
         while(current->next != NULL){
             current = current->next;
         }
         current->next = t;
+        // return current;
     }
 }
 
 void insertCSG(CSGTUPLE tuple, CSGTABLE table){
     unsigned long hashIndex = hashCSG(tuple->Course, tuple->StudentId);
     hashIndex = hashIndex % SIZE;
-    
+    if(tuple== NULL){printf("o");}
     if(table[hashIndex] == NULL){
         table[hashIndex] = malloc(sizeof(CSGTUPLE));
-
         CSGTUPLE head = NULL;
         insertCSGIntoListOfCSGs(head, tuple);
-        table[hashIndex] = head;
-        if(table[hashIndex]== NULL){printf("f");}
-        // printf("NULL%s\t%s\t%s\n", table[hashIndex]->Course,table[hashIndex]->StudentId,table[hashIndex]->Grade);
+        // table[hashIndex] = head;
     }else{
         CSGTUPLE head = table[hashIndex];
         insertCSGIntoListOfCSGs(head, tuple);
-        table[hashIndex] = head;
-        if(table[hashIndex]== NULL){printf("o");}
-        // printf("HOPE%s\t%s\t%s\n", table[hashIndex]->Course,table[hashIndex]->StudentId,table[hashIndex]->Grade);
+        // table[hashIndex] = head;
     }
 }
 
@@ -69,15 +65,17 @@ void printCSG(CSGTABLE t){
     
     for (int i = 0; i < SIZE; i++)  {
         CSGTUPLE head = t[i];
+        // printf("%d: ", i);
         if(head == NULL){
-            // printf("%d\n", i);
+            // printf("NULL");
         }else{
             CSGTUPLE current = head;
             while(current != NULL){
-                printf("%s\t%s\t%s\n", t[i]->Course,t[i]->StudentId,t[i]->Grade);
+                printf("%s\t%s\t%s", t[i]->Course,t[i]->StudentId,t[i]->Grade);
                 current = current->next;
             }
         }
+        printf("\n");
     }
 }
 

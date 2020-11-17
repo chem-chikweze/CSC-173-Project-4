@@ -16,8 +16,8 @@
 8.  difference
 9.  insert
 10. projection    printf("1");
-
 11. joinn
+
 
 **/
 int main() {
@@ -25,6 +25,7 @@ int main() {
     fromFIle(r, "input.txt");
 
     //PRINT
+    printf("");
     printCSG(r->csg);
     // printSNAP(r->snap);
     // printCP(r->cp);
