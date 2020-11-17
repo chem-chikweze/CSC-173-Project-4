@@ -76,6 +76,7 @@ CPTUPLE** createCPTABLE();
 CDHTUPLE** createCDHTABLE();
 CRTUPLE** createCRTABLE();
 
+void grow();
 
 // hash
 unsigned long hashCSG (char *Course, char *StudentId);

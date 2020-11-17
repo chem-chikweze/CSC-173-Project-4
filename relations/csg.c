@@ -27,6 +27,9 @@ CSGTUPLE** createCSGTABLE() {
     // printf("print");
     return ron;
 }
+void grow(){
+
+}
 
 CSGTUPLE* createCSG(char* Course, char *StudentId, char* Grade){
     CSGTUPLE *tuple = (CSGTUPLE*)malloc(sizeof(CSGTUPLE*));
@@ -194,7 +197,7 @@ void printCSG(CSGTUPLE** t){
             CSGTUPLE* current = head;
             while(current != NULL){
                 // printf("ten");
-                printf("%s\t%s\t%s\t%d\n", current->Course,current->StudentId,current->Grade, current->count);
+                printf("%s\t%s\t%s\n", current->Course,current->StudentId,current->Grade);
                 current = current->next;
             }
         }
@@ -205,6 +208,7 @@ int main() {
     // db *d = createDB();
     CSGTUPLE** r = createCSGTABLE();
     fromfileCSG(r, "input.txt");
+    printf("hye");
     insertCSG(createCSG("CSC 173", "123", "A"), r);
     insertCSG(createCSG("CSC 173", "123", "A"), r);
     insertCSG(createCSG("CSC 173", "123", "A"), r);
