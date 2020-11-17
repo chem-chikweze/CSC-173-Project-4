@@ -86,3 +86,84 @@ void insert(HASHTABLE table, char *Course, int StudentId, char *Grade){
 //     table[hashIndex] = tuple;
 //     n++;
     // printf("%d\t%s", hashIndex, table[hashIndex]->Grade);
+
+
+    
+struct attribute
+{   // attributes of a tuple.
+    char* name;
+    char* value;
+    bool key;
+    int columns;
+    struct attribute* next;
+};
+typedef struct attribute* element; // a list of attributes is a tuple. 
+//tuple is a pointer to the first attribute in the list.
+// hashtable is an array of tuples. (list-elements)
+
+struct node{
+    element e;
+    struct* node;
+}
+typedef struct element** hashtable;
+
+
+unsigned long hash(element e) {
+    unsigned long hash = 0;
+    element current = e;
+    while(current->next != NULL){
+        if(current->key == 1){
+            const char *c = current->value;
+            while (c != NULL && *c != '\0'){
+                hash += (intptr_t)c;
+                ++c;
+            }
+        }
+    }
+    hash = (hash * BASE)% SIZE;
+    return hash;
+}
+
+void insertIntoList(element head, element new_element){
+    if(head == NULL){
+        head = new_element;
+    }else{
+        element current = head;
+        while(current->next != NULL){
+            current = current->next;
+        }
+        current->next = new_element;
+    }
+}
+
+void insertIntoTable(element e, hashtable t){
+    unsigned long hashIndex = hash(e);
+    hashIndex = hashIndex % SIZE;
+    if(t[hashIndex] == NULL){
+        t[hashIndex] = malloc(sizeof(element));
+
+        element head = NULL;
+        insertCSGIntoListOfCSGs(head, e);
+        t[hashIndex] = head;
+    }else{
+        element head = t[hashIndex];
+        insertCSGIntoListOfCSGs(head, e);
+        t[hashIndex] = head;
+    }
+
+}
+
+// void print(hashtable t){
+//     for (int i = 0; i < SIZE; i++)  {
+//         element head = t[i];
+//         if(head == NULL){
+//         }else{
+//             element current = head;
+//             while(current != NULL){
+//                 printElement(current);
+//                 // printf("%s\t%s\t%s", t[i]->Course,t[i]->StudentId,t[i]->Grade);
+//                 current = current->next;
+//             }
+//         }
+//     }
+// }
