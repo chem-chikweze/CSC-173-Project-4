@@ -156,6 +156,7 @@ void insertNodeCSG(CSGTABLE table){
 
 void insertSNAP(SNAPTUPLE tuple, SNAPTABLE table){
     unsigned long hashIndex = hashSNAP(tuple->StudentId);
+    hashIndex = hashIndex % SIZE;
     tuple->next = table[hashIndex];
     table[hashIndex] = tuple;
     n++;
@@ -163,6 +164,7 @@ void insertSNAP(SNAPTUPLE tuple, SNAPTABLE table){
 
 void insertCP(CPTUPLE tuple, CPTABLE table){
     int hashIndex = hashCP(tuple->Course, tuple->Prerequisite);
+    hashIndex = hashIndex % SIZE;
     tuple->next = table[hashIndex];
     table[hashIndex] = tuple;
     n++;
@@ -171,6 +173,7 @@ void insertCP(CPTUPLE tuple, CPTABLE table){
 
 void insertCDH(CDHTUPLE tuple, CDHTABLE table){
     int hashIndex = hashCDH(tuple->Course, tuple->Day, tuple->Hour);
+    hashIndex = hashIndex % SIZE;
     tuple->next = table[hashIndex];
     table[hashIndex] = tuple;
     n++;
@@ -179,6 +182,7 @@ void insertCDH(CDHTUPLE tuple, CDHTABLE table){
 
 void insertCR(CRTUPLE tuple, CRTABLE table){
     int hashIndex = hashCR(tuple->Course, tuple->Room);
+    hashIndex = hashIndex % SIZE;
     tuple->next = table[hashIndex];
     table[hashIndex] = tuple;
     n++;

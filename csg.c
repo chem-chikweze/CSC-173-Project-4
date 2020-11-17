@@ -47,23 +47,30 @@ void insertCSGIntoListOfCSGs(CSGTUPLE head, CSGTUPLE t){
 void insertCSG(CSGTUPLE tuple, CSGTABLE table){
     unsigned long hashIndex = hashCSG(tuple->Course, tuple->StudentId);
     hashIndex = hashIndex % SIZE;
+    
     if(table[hashIndex] == NULL){
         table[hashIndex] = malloc(sizeof(CSGTUPLE));
 
         CSGTUPLE head = NULL;
         insertCSGIntoListOfCSGs(head, tuple);
         table[hashIndex] = head;
+        if(table[hashIndex]== NULL){printf("f");}
+        // printf("NULL%s\t%s\t%s\n", table[hashIndex]->Course,table[hashIndex]->StudentId,table[hashIndex]->Grade);
     }else{
         CSGTUPLE head = table[hashIndex];
         insertCSGIntoListOfCSGs(head, tuple);
         table[hashIndex] = head;
+        if(table[hashIndex]== NULL){printf("o");}
+        // printf("HOPE%s\t%s\t%s\n", table[hashIndex]->Course,table[hashIndex]->StudentId,table[hashIndex]->Grade);
     }
 }
 
 void printCSG(CSGTABLE t){
+    
     for (int i = 0; i < SIZE; i++)  {
         CSGTUPLE head = t[i];
         if(head == NULL){
+            // printf("%d\n", i);
         }else{
             CSGTUPLE current = head;
             while(current != NULL){
