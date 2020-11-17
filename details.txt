@@ -79,3 +79,10 @@ void insert(HASHTABLE table, char *Course, int StudentId, char *Grade){
     // printf("\nYup %s", h->Hour);
     // printf("\nYup %s", rt->Room);
     // printf("\n");
+
+    //     tuple->next = table[hashIndex];
+// //     if(table[hashIndex]){    printf("second %d\t%s\n", hashIndex, tuple->next->Course);
+// // }
+//     table[hashIndex] = tuple;
+//     n++;
+    // printf("%d\t%s", hashIndex, table[hashIndex]->Grade);

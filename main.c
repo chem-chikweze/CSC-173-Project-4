@@ -26,14 +26,21 @@ int main() {
 
     //PRINT
     printCSG(r->csg);
-    printSNAP(r->snap);
-    printCP(r->cp);
-    printCDH(r->cdh);    
-    printCR(r->cr);        
+    // printSNAP(r->snap);
+    // printCP(r->cp);
+    // printCDH(r->cdh);    
+    // printCR(r->cr);        
 
     // LOOKUP
-    CSGTUPLE rt = createCSG("*", "*", "Room 2");
-    CSGTUPLE t = lookupCSG(rt, r->csg);
+    // CSGTUPLE rt = createCSG("CSC101", "12345", "*");
+    // CSGTUPLE t = lookupCSG(rt, r->csg);
+    // if(t !=NULL){
+    //     printf("%s", t->Grade);
+    // }else
+    // {
+    //     printf("\nh");
+    // }
+    
     // insertCR(rt, r->cr);
     // printf("\n%s\n", "print");
     // printf("\n");

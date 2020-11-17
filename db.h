@@ -1,8 +1,6 @@
 #ifndef DB_H
 #define DB_H
 #include "rel.h"
-
-
 #define SIZE 100
 #define CSGSIZE 50
 #define SNAPSIZE 100
@@ -15,8 +13,8 @@
 #include <string.h>
 
 
-typedef struct db *db;
-struct db
+typedef struct database *db;
+struct database
 {
     CSGTABLE csg;
     SNAPTABLE snap;

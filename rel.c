@@ -1,26 +1,39 @@
 #include "rel.h"
 #include "db.h"
 
+
 unsigned long hashCSG (char *Course, char *StudentId) {
-    unsigned long hash;
-    int val1,val2, val3;
-    char str[100];
-    strcpy(str, Course);
-    val1 =  atoi(str);
-    strcpy(str, StudentId);
-    val2 = atoi(str);
-    val3 = val1*val2;
-    hash = (val3 * BASE)% SIZE;
+    unsigned long hash = 0;
+    int val1 = 0;
+    const char *c = Course;
+
+    while (c != NULL && *c != '\0')
+    {
+        val1 += (intptr_t)c;
+        ++c;
+    }
+    const char *s = StudentId;
+    while (s != NULL && *s != '\0')
+    {
+        val1 += (intptr_t)s;
+        ++s;
+    }
+
+    hash = (val1 * BASE)% SIZE;
     return hash;
 }
 
 unsigned long hashSNAP (char *StudentId){
     unsigned long hash = 0;
     int val1;
-    char str[100];
-    strcpy(str, StudentId);
-    val1 =  atoi(str);
-    hash = val1 % SIZE;
+    const char *s = StudentId;
+    while (s != NULL && *s != '\0')
+    {
+        val1 += (intptr_t)s;
+        ++s;
+    }
+
+    hash = (val1 * BASE)% SIZE;
     return hash;
 }
 
@@ -53,8 +66,8 @@ unsigned long hashCDH (char* Course, char* Day, char* Hour){
 }
 
 unsigned long hashCR (char* Course, char* Room){
-    int hash;
-    int val1,val2, val3;
+    int hash  = 0;
+    int val1,val2, val3 = 0;
     char str[100];
     strcpy(str, Course);
     val1 =  atoi(str);
@@ -71,68 +84,75 @@ unsigned long hashCR (char* Course, char* Room){
 
 CSGTUPLE createCSG(char* Course, char *StudentId, char* Grade){
     CSGTUPLE tuple = (CSGTUPLE)malloc(sizeof(CSGTUPLE));
-    tuple->Course = (char *)malloc(sizeof(char)*courseSize);
-    tuple->Grade = (char *)malloc(sizeof(char)*gradeSize);
-    tuple->StudentId = (char *)malloc(sizeof(char)*studentSize);
+    tuple->Course = strdup(Course);
+    tuple->Grade = strdup(Grade);
+    tuple->StudentId = strdup(StudentId);
     tuple->next = NULL;
-    strcpy(tuple->StudentId, StudentId);
-    strcpy(tuple->Course, Course);
-    strcpy(tuple->Grade, Grade);
     return tuple;
 }
 
 SNAPTUPLE createSNAP(char *StudentId, char *Name, char* Address, char *Phone){
     SNAPTUPLE tuple = (SNAPTUPLE)malloc(sizeof(SNAPTUPLE));
-    tuple->StudentId = (char *)malloc(sizeof(char)*studentSize);
-    tuple->Name = (char *)malloc(sizeof(char)*NameSize);
-    tuple->Address = (char *)malloc(sizeof(char)*AddressSize);
-    tuple->Phone = (char *)malloc(sizeof(char)*gradeSize);
+    tuple->StudentId = strdup(StudentId);
+    tuple->Name = strdup(Name);
+    tuple->Address = strdup(Address);
+    tuple->Phone = strdup(Phone);
     tuple->next = NULL;
-    strcpy(tuple->Name, Name);
-    strcpy(tuple->Address, Address);
-    strcpy(tuple->StudentId, StudentId);
-    strcpy(tuple->Phone, Phone);
     return tuple;
 }
 
 CPTUPLE createCP(char* Course, char* Prerequisite){
     CPTUPLE tuple = (CPTUPLE)malloc(sizeof(CPTUPLE));
-    tuple->Course = (char *)malloc(sizeof(char)*courseSize);
-    tuple->Prerequisite = (char *)malloc(sizeof(char)*prereqSize);
+    tuple->Course = strdup(Course);
+    tuple->Prerequisite = strdup(Prerequisite);
     tuple->next = NULL;
-    strcpy(tuple->Course, Course);
-    strcpy(tuple->Prerequisite, Prerequisite);
     return tuple;
 }
 
 CDHTUPLE createCDH(char* Course, char* Day, char* Hour){
     CDHTUPLE tuple = (CDHTUPLE)malloc(sizeof(CDHTUPLE));
-    tuple->Course = (char *)malloc(sizeof(char)*courseSize);
-    tuple->Day = (char *)malloc(sizeof(char)*daySize);
-    tuple->Hour = (char *)malloc(sizeof(char)*hourSize);
+    tuple->Course = strdup(Course);
+    tuple->Day = strdup(Day);
+    tuple->Hour = strdup(Hour);
     tuple->next = NULL;
-    strcpy(tuple->Course, Course);
-    strcpy(tuple->Day, Day);
-    strcpy(tuple->Hour, Hour);
     return tuple;
 }
 
 CRTUPLE createCR(char* Course, char* Room){
     CRTUPLE tuple = (CRTUPLE)malloc(sizeof(CRTUPLE));
-    tuple->Course = (char *)malloc(sizeof(char)*courseSize);
-    tuple->Room = (char *)malloc(sizeof(char)*roomSize);
+    tuple->Course = strdup(Course);
+    tuple->Room = strdup(Room);
     tuple->next = NULL;
-    strcpy(tuple->Course, Course);
-    strcpy(tuple->Room, Room);
     return tuple;
 }
 
-void insertCSG(CSGTUPLE tuple, CSGTABLE table){
-    unsigned long hashIndex = hashCSG(tuple->Course, tuple->StudentId);
-    tuple->next = table[hashIndex];
-    table[hashIndex] = tuple;
-    n++;
+void insertNodeCSG(CSGTABLE table){
+
 }
+
+// void insertCSG(CSGTUPLE tuple, CSGTABLE table){
+//     unsigned long hashIndex = hashCSG(tuple->Course, tuple->StudentId);
+//     hashIndex = hashIndex % SIZE;
+//     if(table[hashIndex] == NULL){
+//         table[hashIndex] = malloc(sizeof(CSGTUPLE));
+
+//         CSGTUPLE head = NULL;
+//         insertNodeCSG(&head, tuple);
+//         table[hashIndex] = head;
+//     }else
+//     {
+//         CSGTUPLE head = table[hashIndex];
+//         insertListCSG(&head, table);
+        
+//         table[hashIndex] = head;
+//     }
+// //     tuple->next = table[hashIndex];
+// // //     if(table[hashIndex]){    printf("second %d\t%s\n", hashIndex, tuple->next->Course);
+// // // }
+// //     table[hashIndex] = tuple;
+// //     n++;
+//     // printf("%d\t%s", hashIndex, table[hashIndex]->Grade);
+// }
 
 void insertSNAP(SNAPTUPLE tuple, SNAPTABLE table){
     unsigned long hashIndex = hashSNAP(tuple->StudentId);
@@ -165,12 +185,18 @@ void insertCR(CRTUPLE tuple, CRTABLE table){
 }
 
 void printCSG(CSGTABLE t){
-    for (int i = 0; i < CSGSIZE; i++)
-    {   
-        if (t[i] ){  
-            printf("\n%s\t%d\t%s", t[i]->Course,t[i]->StudentId,t[i]->Grade);     
-        } 
+    for (int i = 0; i < 45; i++)  {
+        for(CSGTUPLE e = t[i]; e != NULL; e = e->next){
+            printf("%s\t%s\t%s", t[i]->Course,t[i]->StudentId,t[i]->Grade);
+        }
     }
+
+    // for (int i = 0; i < CSGSIZE; i++)
+    // {   
+    //     if (t[i] ){  
+    //         printf("\n%s\t%d\t%s", t[i]->Course,t[i]->StudentId,t[i]->Grade);     
+    //     } 
+    // }
 }
 
 void printSNAP(SNAPTABLE t){
@@ -213,26 +239,91 @@ void printCR(CRTABLE t){
 
 
 CSGTUPLE lookupCSG(CSGTUPLE tuple, CSGTABLE table){
-    if(tuple->Course != "*" && tuple->StudentId != "*"){
+    // printf("%s\t%s\n", tuple->Course, tuple->Grade);
+
+    // C S G or C S *
+    if(strcmp(tuple->Course,"*") != 0 && strcmp(tuple->StudentId, "*") != 0){
         printf("f");
         int index = hashCSG(tuple->Course, tuple->StudentId);
-
         for(CSGTUPLE e = table[hashCSG(tuple->Course, tuple->StudentId) % SIZE]; e != NULL; e = e->next){
             if(!strcmp(e->Course, tuple->Course) && !strcmp(e->StudentId, tuple->StudentId)){
                 return e;
             }
         }
         return 0;
-    }else{
-        printf("yup");
-        return 0;
+
     }
+    // * S G
+    else if( !strcmp(tuple->Course,"*") && strcmp(tuple->StudentId, "*") != 0 && strcmp(tuple->Grade, "*") != 0 ){
+        for (int i = 0; i < SIZE; i++)  {
+            for(CSGTUPLE e = table[i]; e != NULL; e = e->next){
+                if(!strcmp(e->StudentId, tuple->StudentId) && !strcmp(tuple->Grade, tuple->Grade)){
+                    return e;
+                }
+            }
+        }
+    }
+    // * S *
+    else if( !strcmp(tuple->Course,"*") && strcmp(tuple->StudentId, "*") != 0 && !strcmp(tuple->Grade, "*") ){
+        for (int i = 0; i < SIZE; i++)  {
+            for(CSGTUPLE e = table[i]; e != NULL; e = e->next){
+                if(!strcmp(e->StudentId, tuple->StudentId)){
+                    return e;
+                }
+            }
+        }
+    }
+
+    // C * G
+    else if( strcmp(tuple->Course,"*") != 0 && !strcmp(tuple->StudentId, "*") && strcmp(tuple->Grade, "*") != 0 ){
+        for (int i = 0; i < SIZE; i++)  {
+            for(CSGTUPLE e = table[i]; e != NULL; e = e->next){
+                if(!strcmp(e->Grade, tuple->Grade) && !strcmp(tuple->Course, tuple->Course)){
+                    return e;
+                }
+            }
+        }
+    }
+    // C * *
+    else if( strcmp(tuple->Course,"*") != 0 && !strcmp(tuple->StudentId, "*") && !strcmp(tuple->Grade, "*") ){
+        for (int i = 0; i < SIZE; i++)  {
+            for(CSGTUPLE e = table[i]; e != NULL; e = e->next){
+                if(!strcmp(tuple->Course, tuple->Course)){
+                    printf("%s", e->Course);
+                    return e;
+                }
+            }
+        }
+    }
+
+    // * * G
+    else if(!strcmp(tuple->Course,"*") && !strcmp(tuple->StudentId, "*") && strcmp(tuple->Grade, "*") != 0){
+        for (int i = 0; i < SIZE; i++)  {
+            for(CSGTUPLE e = table[i]; e != NULL; e = e->next){
+                if(!strcmp(e->Grade, tuple->Grade)){
+                    return e;
+                }
+            }
+        }
+    }
+
+    // * * *
+    else if(!strcmp(tuple->Course,"*") && !strcmp(tuple->StudentId, "*") && !strcmp(tuple->Grade, "*")){
+        for (int i = 0; i < SIZE; i++)  {
+            for(CSGTUPLE e = table[i]; e != NULL; e = e->next){
+
+                return e;
+
+            }
+        }
+    }
+    
     return NULL;
 }
 
-SNAPTUPLE lookupSNAP(SNAPTUPLE tuple, SNAPTABLE table){
-    return NULL;
-}
-CPTUPLE lookupCP(CPTUPLE tuple, CPTABLE table){}
-CDHTUPLE lookupCDH(CDHTUPLE tuple, CDHTABLE table){}
-CRTUPLE lookupCR(CRTUPLE tuple, CRTABLE table){}
+// SNAPTUPLE lookupSNAP(SNAPTUPLE tuple, SNAPTABLE table){
+//     return NULL;
+// }
+// CPTUPLE lookupCP(CPTUPLE tuple, CPTABLE table){}
+// CDHTUPLE lookupCDH(CDHTUPLE tuple, CDHTABLE table){}
+// CRTUPLE lookupCR(CRTUPLE tuple, CRTABLE table){}
