@@ -401,7 +401,7 @@ void printSNAP(SNAPTUPLE** t){
             SNAPTUPLE* current = head;
             while(current != NULL){
                 // printf("ten");
-                printf("%s\t%s\t%s\n", current->StudentId, current->Name,current->Address, current->Phone);
+                printf("%s\t%s\t%s\t%s\n", current->StudentId, current->Name,current->Address, current->Phone);
                 current = current->next;
             }
         }
@@ -418,7 +418,7 @@ void printCP(CPTUPLE** t){
             CPTUPLE* current = head;
             while(current != NULL){
                 // printf("ten");
-                printf("%s\t%s\t%s\n", current->Course, current->Prerequisite);
+                printf("%s\t%s\n", current->Course, current->Prerequisite);
                 current = current->next;
             }
         }
@@ -452,7 +452,7 @@ void printCR(CRTUPLE** t){
             CRTUPLE* current = head;
             while(current != NULL){
                 // printf("ten");
-                printf("%s\t%s\t%s\n", current->Course, current->Room);
+                printf("%s\t%s\t\n", current->Course, current->Room);
                 current = current->next;
             }
         }

@@ -25,7 +25,7 @@ struct database{
     CRTUPLE** cr;
 };
 
-db createDB();
+db* createDB();
 void fromFIle(db* r, const char *f);
 void grow();
 

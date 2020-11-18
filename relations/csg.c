@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "rel.c"
-#include "db.h"
+#include "db.c"
 
 unsigned long hashCSG (char *Course, char *StudentId) {
     unsigned long hash;
@@ -199,7 +199,7 @@ void printCSG(CSGTUPLE** t){
 }
 
 int main() {
-    db d = createDB();
+    db d = *createDB();
     d.csg  =  createCSGTABLE();
     d.snap  =  createSNAPTABLE();
     d.cp  =  createCPTABLE();
