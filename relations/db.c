@@ -3,7 +3,7 @@
 
 
 // to star or not to star
-db createDB(){
+db* createDB(){
     int n = 0;
     db *dbase =  (db*) malloc (sizeof(db));
     (dbase->csg) = createCSGTABLE();

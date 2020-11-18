@@ -160,12 +160,10 @@ void fromfileCSG(CSGTUPLE** r, const char* f){
         printf("Error! opening file");
         exit(1);
     }
-    
     while(fgets(line, 100, fp)){
         const char delim[2] = "|";
         char *token;
         int i=0, j;
-
         char *words[20];
         token = strtok(line, delim);
         while(token){
@@ -173,7 +171,6 @@ void fromfileCSG(CSGTUPLE** r, const char* f){
             token = strtok(NULL, delim);
             i++;
         }
-
         for(int j = 0; j< i; j++){
             if(n>= SIZE){
                 grow();
@@ -205,14 +202,15 @@ void printCSG(CSGTUPLE** t){
 }
 
 int main() {
-    // db *d = createDB();
-    CSGTUPLE** r = createCSGTABLE();
+    db d = createDB();
+    d.csg  =  createCSGTABLE();
+    // CSGTUPLE** r = createCSGTABLE();
     fromfileCSG(r, "input.txt");
     printf("hye");
-    insertCSG(createCSG("CSC 173", "123", "A"), r);
-    insertCSG(createCSG("CSC 173", "123", "A"), r);
-    insertCSG(createCSG("CSC 173", "123", "A"), r);
-    printCSG(r);
+    insertCSG(createCSG("CSC 173", "123", "A"), d.csg );
+    insertCSG(createCSG("CSC 173", "123", "A"), d.csg );
+    insertCSG(createCSG("CSC 173", "123", "A"), d.csg );
+    printCSG(d.csg );
     // printf("\n");
     // CSGTUPLE t1 = createTuple("CSC 173", "A", 123);
     // delete(t1, r);
