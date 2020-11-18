@@ -5,8 +5,6 @@
 #include "rel.h"
 #include "db.h"
 
-
-
 unsigned long hashCSG (char *Course, char *StudentId) {
     unsigned long hash;
     // elements will be treated as having values greater than 0
@@ -27,8 +25,8 @@ CSGTUPLE** createCSGTABLE() {
     // printf("print");
     return ron;
 }
-void grow(){
 
+void grow(){
 }
 
 CSGTUPLE* createCSG(char* Course, char *StudentId, char* Grade){
@@ -60,14 +58,12 @@ void insertCSGIntoListOfCSGs(CSGTUPLE* head, CSGTUPLE* t){
         }
         current->count = c;
         current->next = t;
-        
     }
 }
 
 void insertCSG(CSGTUPLE* tuple, CSGTUPLE** table){
     unsigned long hashIndex = hashCSG(tuple->Course, tuple->StudentId);
     // printf("Insert%s\t%d\n", tuple->Course, hashIndex); 
-    
     hashIndex = hashIndex % SIZE;
     if(table[hashIndex] == NULL){
         table[hashIndex] = (CSGTUPLE*)malloc(sizeof(CSGTUPLE*));
@@ -153,6 +149,7 @@ void insertCSG(CSGTUPLE* tuple, CSGTUPLE** table){
 //         if (t[i] ){     printf("%s", t[i]->Course);     } 
 //     }
 // }
+
 void fromfileCSG(CSGTUPLE** r, const char* f){
     FILE *fp;
     char line[100];
