@@ -201,13 +201,25 @@ void printCSG(CSGTUPLE** t){
 int main() {
     db d = createDB();
     d.csg  =  createCSGTABLE();
+    d.snap  =  createSNAPTABLE();
+    d.cp  =  createCPTABLE();
+    d.cdh  =  createCDHTABLE();
+    d.cr  =  createCRTABLE();
     // CSGTUPLE** r = createCSGTABLE();
     fromfileCSG(d.csg, "input.txt");
+    fromfileSNAP(d.snap, "input.txt");
+    fromfileCP(d.cp, "input.txt");
+    fromfileCDH(d.cdh, "input.txt");
+    fromfileCR(d.cr, "input.txt");
     printf("hye");
     insertCSG(createCSG("CSC 173", "123", "A"), d.csg );
     insertCSG(createCSG("CSC 173", "123", "A"), d.csg );
     insertCSG(createCSG("CSC 173", "123", "A"), d.csg );
     printCSG(d.csg );
+    printSNAP(d.snap );
+    printCP(d.cp);
+    printCDH(d.cdh);
+    printCR(d.cr);
     // printf("\n");
     // CSGTUPLE t1 = createTuple("CSC 173", "A", 123);
     // delete(t1, r);
