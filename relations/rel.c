@@ -221,7 +221,7 @@ void insertCP(CPTUPLE* tuple, CPTUPLE** table){
     unsigned long hashIndex = hashCP(tuple->Course, tuple->Prerequisite);
     hashIndex = hashIndex % SIZE;
     if(table[hashIndex] == NULL){
-        table[hashIndex] = (SNAPTUPLE*)malloc(sizeof(SNAPTUPLE*));
+        table[hashIndex] = (CPTUPLE*)malloc(sizeof(CPTUPLE*));
         table[hashIndex]->Course = strdup(tuple->Course);
         table[hashIndex]->Prerequisite = strdup(tuple->Prerequisite);
         table[hashIndex]->next =NULL;
@@ -264,37 +264,6 @@ void insertCR(CRTUPLE* tuple, CRTUPLE** table){
         table[hashIndex] = head;
         // printf("%d\n",table[hashIndex]->count);
     }
-}
-
-void fromfileSNAP(SNAPTUPLE** r, const char* f){
-    FILE *fp;
-    char line[100];
-    if((fp = fopen(f, "r")) == NULL){
-        printf("Error! opening SNAP file");
-        exit(1);
-    }
-    while(fgets(line, 100, fp)){
-        const char delim[2] = "|";
-        char *token;
-        int i=0, j;
-        char *words[20];
-        token = strtok(line, delim);
-        while(token){
-            words[i] = token;
-            token = strtok(NULL, delim);
-            i++;
-        }
-        for(int j = 0; j< i; j++){
-            if(n>= SIZE){
-                grow();
-            }
-            if(strcmp(words[j], "SNAP") == 0){
-                // printf("%s\t%s\t%s",t->Course, t->StudentId, t->Grade);
-                insertSNAP(createSNAP(words[1], words[2], words[3], words[4]), r);
-            }
-        }
-    }
-    fclose(fp);
 }
 
 void fromfileSNAP(SNAPTUPLE** r, const char* f){

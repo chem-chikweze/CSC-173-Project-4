@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "rel.h"
+#include "rel.c"
 #include "db.h"
 
 unsigned long hashCSG (char *Course, char *StudentId) {

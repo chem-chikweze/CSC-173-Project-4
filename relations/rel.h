@@ -71,7 +71,7 @@ struct CR {
     int count;
 };
 
-void insertCSGIntoListOfCSGs(CSGTUPLE* head, CSGTUPLE* t);
+
 CSGTUPLE** createCSGTABLE();
 SNAPTUPLE** createSNAPTABLE();
 CPTUPLE** createCPTABLE();
@@ -87,6 +87,20 @@ unsigned long hashCP (char *Course, char* Prerequisite);
 unsigned long hashCDH (char* Course, char* Day, char* Hour);
 unsigned long hashCR (char* Course, char* Room);
 
+// csg table
+CSGTUPLE** createCSGTABLE() ;
+SNAPTUPLE** createSNAPTABLE();
+CPTUPLE** createCPTABLE();
+CDHTUPLE** createCDHTABLE();
+CRTUPLE** createCRTABLE();
+
+//insert into list
+void insertCSGIntoListOfCSGs(CSGTUPLE* head, CSGTUPLE* t);
+void insertSNAPIntoListOfCSGs(SNAPTUPLE* head, SNAPTUPLE* t);
+void insertCPIntoListOfCSGs(CPTUPLE* head, CPTUPLE* t);
+void insertCDHIntoListOfCSGs(CDHTUPLE* head, CDHTUPLE* t);
+void insertCRIntoListOfCSGs(CRTUPLE* head, CRTUPLE* t);
+
 // create
 CSGTUPLE* createCSG(char* Course, char *StudentId, char* Grade);
 SNAPTUPLE* createSNAP(char *StudentId, char* Name, char* Address, char *Phone);
@@ -100,6 +114,13 @@ void insertSNAP(SNAPTUPLE *tuple, SNAPTUPLE** table);
 void insertCP(CPTUPLE* tuple, CPTUPLE** table);
 void insertCDH(CDHTUPLE* tuple, CDHTUPLE** table);
 void insertCR(CRTUPLE *tuple, CRTUPLE** table);
+
+// from file
+void fromfileCSG(CSGTUPLE** r, const char* f);
+void fromfileSNAP(SNAPTUPLE** r, const char* f);
+void fromfileCP(CPTUPLE** r, const char* f);
+void fromfileCDH(CDHTUPLE** r, const char* f);
+void fromfileCR(CRTUPLE** r, const char* f);
 
 // delete
 void deleteCSG(CSGTUPLE *tuple, CSGTUPLE** table);
