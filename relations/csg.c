@@ -202,7 +202,7 @@ int main() {
     db d = createDB();
     d.csg  =  createCSGTABLE();
     // CSGTUPLE** r = createCSGTABLE();
-    fromfileCSG(r, "input.txt");
+    fromfileCSG(d.csg, "input.txt");
     printf("hye");
     insertCSG(createCSG("CSC 173", "123", "A"), d.csg );
     insertCSG(createCSG("CSC 173", "123", "A"), d.csg );

@@ -40,7 +40,7 @@ struct SNAP {
     char *Address;
     char *Phone;
     SNAPTUPLE* next;
-        int count;
+    int count;
 };
 
 // table 3:Course Prerequisite    CP
@@ -49,7 +49,7 @@ struct CP {
     char *Course;             //conjugate key
     char *Prerequisite;       //conjugate key
     CPTUPLE* next;
-        int count;
+    int count;
 };
 
 //table 4:Course Day Hour    CDH
@@ -59,6 +59,7 @@ struct CDH {
     char *Day;            //conjugate key
     char *Hour;           //conjugate key
     CDHTUPLE* next;
+    int count;
 };
 
 //table 5:Course Room    CR
@@ -67,6 +68,7 @@ struct CR {
     char *Course;
     char *Room;
     CRTUPLE* next;
+    int count;
 };
 
 void insertCSGIntoListOfCSGs(CSGTUPLE* head, CSGTUPLE* t);
@@ -95,23 +97,23 @@ CRTUPLE* createCR(char* Course, char* Room);
 // insert
 void insertCSG(CSGTUPLE *tuple, CSGTUPLE** table);
 void insertSNAP(SNAPTUPLE *tuple, SNAPTUPLE** table);
-void insertCP(CPTUPLE tuple, CPTUPLE** table);
-void insertCDH(CDHTUPLE tuple, CDHTUPLE** table);
-void insertCR(CRTUPLE tuple, CRTUPLE** table);
+void insertCP(CPTUPLE* tuple, CPTUPLE** table);
+void insertCDH(CDHTUPLE* tuple, CDHTUPLE** table);
+void insertCR(CRTUPLE *tuple, CRTUPLE** table);
 
 // delete
 void deleteCSG(CSGTUPLE *tuple, CSGTUPLE** table);
 void deleteSNAP(SNAPTUPLE *tuple, SNAPTUPLE** table);
-void deleteCP(CPTUPLE tuple, CPTUPLE** table);
-void deleteCDH(CDHTUPLE tuple, CDHTUPLE** table);
-void deleteCR(CRTUPLE tuple, CRTUPLE** table);
+void deleteCP(CPTUPLE* tuple, CPTUPLE** table);
+void deleteCDH(CDHTUPLE* tuple, CDHTUPLE** table);
+void deleteCR(CRTUPLE* tuple, CRTUPLE** table);
 
 // lookup
 CSGTUPLE lookupCSG(CSGTUPLE *tuple, CSGTUPLE** table);
 SNAPTUPLE lookupSNAP(SNAPTUPLE *tuple, SNAPTUPLE** table);
-CPTUPLE lookupCP(CPTUPLE tuple, CPTUPLE** table);
-CDHTUPLE lookupCDH(CDHTUPLE tuple, CDHTUPLE** table);
-CRTUPLE lookupCR(CRTUPLE tuple, CRTUPLE** table);
+CPTUPLE lookupCP(CPTUPLE *tuple, CPTUPLE** table);
+CDHTUPLE lookupCDH(CDHTUPLE *tuple, CDHTUPLE** table);
+CRTUPLE lookupCR(CRTUPLE *tuple, CRTUPLE** table);
 
 //printf
 void printCSG(CSGTUPLE** t);
